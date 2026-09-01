@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  ROOM_USER
+}
+
+enum PaymentMethod {
+  CASH
+  BANK
+  ESEWA
+  OTHER
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password_hash String
+  role          Role      @default(ROOM_USER)
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  room_id       String?   @unique // A room user can only be assigned to one room, and a room can only have one assigned user at a time
+  room          Room?     @relation(fields: [room_id], references: [id])
+}
+
+model Room {
+  id              String         @id @default(uuid())
+  room_name       String         @unique
+  enrollment_date DateTime?      // Gregorian date, converted to/from BS at UI boundary
+  is_active       Boolean        @default(true)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+
+  settings        RoomSettings?
+  bills           MonthlyBill[]
+  user            User?          // A room can have one user assigned to it
+}
+
+model RoomSettings {
+  id                    String   @id @default(uuid())
+  room_id               String   @unique
+  default_water_bill    Decimal  @default(150.00) @db.Decimal(10, 2)
+  default_waste_bill    Decimal  @default(50.00) @db.Decimal(10, 2)
+  default_wifi_bill     Decimal  @default(200.00) @db.Decimal(10, 2)
+  wifi_enabled          Boolean  @default(true)
+  starting_electric_unit Int     @default(0)
+  default_room_rent     Decimal  @default(5000.00) @db.Decimal(10, 2)
+  default_electric_rate Decimal  @default(15.00) @db.Decimal(10, 2)
+  prorate_rent          Boolean  @default(true)
+  prorate_water         Boolean  @default(true)
+  prorate_waste         Boolean  @default(true)
+  prorate_wifi          Boolean  @default(true)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  room                  Room     @relation(fields: [room_id], references: [id])
+}
+
+model MonthlyBill {
+  id                  String   @id @default(uuid())
+  room_id             String
+  bill_date           DateTime @default(now())
+  billing_year        Int
+  billing_month       Int
+
+  // Snapshot values
+  water_bill          Decimal  @db.Decimal(10, 2)
+  waste_bill          Decimal  @db.Decimal(10, 2)
+  wifi_bill           Decimal  @db.Decimal(10, 2)
+  wifi_enabled        Boolean
+  room_rent           Decimal  @db.Decimal(10, 2)
+  
+  // Electricity
+  prev_electric_unit  Int
+  pres_electric_unit  Int
+  electric_rate       Decimal  @db.Decimal(10, 2)
+  electric_units_used Int
+  electric_bill       Decimal  @db.Decimal(10, 2)
+
+  // Totals
+  previous_balance    Decimal  @db.Decimal(10, 2)
+  current_month_total Decimal  @db.Decimal(10, 2)
+  grand_total         Decimal  @db.Decimal(10, 2)
+
+  // Proration metadata
+  prorate_details     Json?
+
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  room                Room      @relation(fields: [room_id], references: [id])
+  payments            Payment[]
+
+  @@unique([room_id, billing_year, billing_month])
+}
+
+model Payment {
+  id              String         @id @default(uuid())
+  monthly_bill_id String
+  amount          Decimal        @db.Decimal(10, 2)
+  payment_date    DateTime       @default(now())
+  payment_method  PaymentMethod
+  note            String?
+  created_at      DateTime       @default(now())
+
+  monthly_bill    MonthlyBill    @relation(fields: [monthly_bill_id], references: [id])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  user_id     String?
+  action      String
+  entity_type String
+  entity_id   String
+  metadata    Json?
+  created_at  DateTime @default(now())
+}
