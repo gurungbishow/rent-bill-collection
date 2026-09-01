@@ -8,14 +8,14 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Building, ArrowRight, Mail, Lock } from 'lucide-react';
+import { Building, ArrowRight, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useLanguage } from '@/context/LanguageContext';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -28,6 +28,7 @@ export default function LoginPage() {
   const { login, isLoggingIn, user, isLoading } = useAuth();
   const { t } = useLanguage();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (user && !isLoading) {
@@ -89,8 +90,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
               <div className="space-y-1.5 sm:space-y-2 relative group">
                 <Label htmlFor="email" className="text-[13px] sm:text-sm text-slate-700 dark:text-slate-300 ml-1">{t.email_address || 'Email Address'}</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3.5 top-3.5 h-[18px] w-[18px] sm:h-5 sm:w-5 text-slate-400 transition-colors group-focus-within:text-blue-500" strokeWidth={1.5} />
+                <div className="relative flex items-center">
                   <Input 
                     id="email" 
                     type="email" 
@@ -98,6 +98,7 @@ export default function LoginPage() {
                     {...register('email')}
                     className={`pl-10 sm:pl-11 h-11 sm:h-12 text-[14px] sm:text-[15px] bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800/80 rounded-xl focus-visible:ring-blue-500 transition-all ${errors.email ? "border-red-500 focus-visible:ring-red-500" : ""}`}
                   />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] sm:h-5 sm:w-5 text-slate-400 pointer-events-none transition-colors group-focus-within:text-blue-500 z-10" strokeWidth={1.5} />
                 </div>
                 {errors.email && <p className="text-[11px] sm:text-xs font-medium text-red-500 ml-1">{errors.email.message}</p>}
               </div>
@@ -106,15 +107,22 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between ml-1">
                   <Label htmlFor="password" className="text-[13px] sm:text-sm text-slate-700 dark:text-slate-300">{t.password}</Label>
                 </div>
-                <div className="relative">
-                  <Lock className="absolute left-3.5 top-3.5 h-[18px] w-[18px] sm:h-5 sm:w-5 text-slate-400 transition-colors group-focus-within:text-blue-500" strokeWidth={1.5} />
+                <div className="relative flex items-center">
                   <Input 
                     id="password" 
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     {...register('password')}
-                    className={`pl-10 sm:pl-11 h-11 sm:h-12 text-[14px] sm:text-[15px] bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800/80 rounded-xl focus-visible:ring-blue-500 transition-all ${errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+                    className={`pl-10 sm:pl-11 pr-10 sm:pr-11 h-11 sm:h-12 text-[14px] sm:text-[15px] bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800/80 rounded-xl focus-visible:ring-blue-500 transition-all ${errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}`}
                   />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] sm:h-5 sm:w-5 text-slate-400 pointer-events-none transition-colors group-focus-within:text-blue-500 z-10" strokeWidth={1.5} />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 z-10 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 cursor-pointer"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
                 {errors.password && <p className="text-[11px] sm:text-xs font-medium text-red-500 ml-1">{errors.password.message}</p>}
               </div>
