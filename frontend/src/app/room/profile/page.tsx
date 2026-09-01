@@ -90,55 +90,56 @@ export default function TenantProfilePage() {
   }
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-2xl mx-auto text-slate-900 dark:text-slate-100">
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t.profile}</h1>
+    <div className="p-3.5 sm:p-4 md:p-6 space-y-4 md:space-y-6 max-w-2xl mx-auto text-slate-900 dark:text-slate-100 pb-24">
+      <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">{t.profile}</h1>
 
       {/* Personal & Room Details */}
-      <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white dark:bg-slate-900 overflow-hidden">
-        <CardHeader className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 pb-4">
-          <CardTitle className="text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
-            <UserIcon size={18} className="text-emerald-600 dark:text-emerald-400" />
-            {t.personal_info}
+      <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden">
+        <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/60 p-3.5 sm:p-4">
+          <CardTitle className="text-xs sm:text-sm font-extrabold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+            <UserIcon size={16} className="text-emerald-600 dark:text-emerald-400" />
+            <span>{t.personal_info}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-5 space-y-4 text-sm">
-          <div className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-              <UserIcon size={15} /> {t.name}
+        <CardContent className="p-3.5 sm:p-5 space-y-3 text-xs">
+          <div className="flex justify-between items-center py-1.5 border-b border-slate-100 dark:border-slate-800/60">
+            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2 font-medium">
+              <UserIcon size={14} className="text-slate-400" /> {t.name}
             </span>
-            <span className="font-semibold text-slate-900 dark:text-slate-100">{profile?.name || user?.name}</span>
+            <span className="font-extrabold text-slate-900 dark:text-slate-100">{profile?.name || user?.name}</span>
           </div>
 
-          <div className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-              <Mail size={15} /> {t.email}
+          <div className="flex justify-between items-center py-1.5 border-b border-slate-100 dark:border-slate-800/60">
+            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2 font-medium">
+              <Mail size={14} className="text-slate-400" /> {t.email}
             </span>
-            <span className="font-medium text-slate-700 dark:text-slate-300">{profile?.email || user?.email}</span>
+            <span className="font-bold text-slate-700 dark:text-slate-300">{profile?.email || user?.email}</span>
           </div>
 
-          <div className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-              <DoorOpen size={15} /> {t.assigned_room}
+          <div className="flex justify-between items-center py-1.5 border-b border-slate-100 dark:border-slate-800/60">
+            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2 font-medium">
+              <DoorOpen size={14} className="text-slate-400" /> {t.assigned_room}
             </span>
-            <span className="font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full">
-              {effectiveRoom?.room_name || (language === 'np' ? 'तोकिएको छैन' : 'Unassigned')}
+            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
+              <DoorOpen size={11} className="text-emerald-500 shrink-0" />
+              <span>{effectiveRoom?.room_name || (language === 'np' ? 'तोकिएको छैन' : 'Unassigned')}</span>
             </span>
           </div>
 
           {effectiveRoom?.enrollment_date && (
-            <div className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-800">
-              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                <Calendar size={15} /> {t.enrollment_date}
+            <div className="flex justify-between items-center py-1.5 border-b border-slate-100 dark:border-slate-800/60">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2 font-medium">
+                <Calendar size={14} className="text-slate-400" /> {t.enrollment_date}
               </span>
-              <span className="font-medium text-slate-900 dark:text-slate-100">{formatDate(effectiveRoom.enrollment_date)}</span>
+              <span className="font-bold text-slate-900 dark:text-slate-100">{formatDate(effectiveRoom.enrollment_date)}</span>
             </div>
           )}
 
-          <div className="flex justify-between items-center py-1">
-            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-              <ShieldCheck size={15} /> {t.role}
+          <div className="flex justify-between items-center py-1.5">
+            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2 font-medium">
+              <ShieldCheck size={14} className="text-slate-400" /> {t.role}
             </span>
-            <Badge variant="outline" className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700">
+            <Badge variant="outline" className="bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 text-[10px] px-2 py-0.5 rounded-full">
               {language === 'np' ? 'भाडावाल (Tenant)' : 'ROOM_USER'}
             </Badge>
           </div>
@@ -146,49 +147,52 @@ export default function TenantProfilePage() {
       </Card>
 
       {/* Change Password Card */}
-      <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white dark:bg-slate-900">
-        <CardHeader className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 pb-4">
-          <CardTitle className="text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
-            <Lock size={18} className="text-blue-600 dark:text-blue-400" />
-            {t.change_password}
+      <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden">
+        <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/60 p-3.5 sm:p-4">
+          <CardTitle className="text-xs sm:text-sm font-extrabold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+            <Lock size={16} className="text-blue-600 dark:text-blue-400" />
+            <span>{t.change_password}</span>
           </CardTitle>
         </CardHeader>
         <form onSubmit={handlePasswordSubmit}>
-          <CardContent className="pt-5 space-y-4">
-            <div className="space-y-1.5">
-              <Label className="text-xs">{t.current_password}</Label>
+          <CardContent className="p-3.5 sm:p-5 space-y-3.5">
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold">{t.current_password}</Label>
               <Input 
                 type="password"
                 value={passwordForm.currentPassword}
                 onChange={(e) => setPasswordForm({...passwordForm, currentPassword: e.target.value})}
+                className="h-9 text-xs rounded-xl"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-xs">{t.new_password}</Label>
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold">{t.new_password}</Label>
               <Input 
                 type="password"
                 value={passwordForm.newPassword}
                 onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                className="h-9 text-xs rounded-xl"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-xs">{t.confirm_password}</Label>
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold">{t.confirm_password}</Label>
               <Input 
                 type="password"
                 value={passwordForm.confirmPassword}
                 onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                className="h-9 text-xs rounded-xl"
               />
             </div>
           </CardContent>
-          <CardFooter className="bg-slate-50 dark:bg-slate-800/60 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+          <CardFooter className="bg-slate-50/60 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-800/60 p-3 sm:p-4 flex justify-end">
             <Button 
               type="submit" 
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold rounded-2xl h-10 px-4 text-xs shadow-md shadow-emerald-500/20 cursor-pointer border-0"
               disabled={changePasswordMutation.isPending}
             >
-              {changePasswordMutation.isPending ? t.loading : t.update_password}
+              <span>{changePasswordMutation.isPending ? t.loading : t.update_password}</span>
             </Button>
           </CardFooter>
         </form>

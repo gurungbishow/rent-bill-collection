@@ -100,37 +100,44 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
       </div>
 
 
-      <div className="md:hidden h-14 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 sticky top-0 z-10">
-        <div className="flex flex-col max-w-[50%]">
-          <div className="font-bold text-sm text-emerald-600 dark:text-emerald-400 leading-tight truncate">{t.tenant_portal}</div>
-          {user && (
-            <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 truncate">
-              {user.name || user.username}
+      {/* Mobile Topbar */}
+      <div className="md:hidden h-13 bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between px-3.5 shrink-0 z-30">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-sm flex-shrink-0">
+            {user?.name ? user.name.charAt(0).toUpperCase() : 'T'}
+          </div>
+          <div className="flex flex-col min-w-0">
+            <div className="font-black text-sm sm:text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)] truncate">
+              {t.tenant_portal}
             </div>
-          )}
+            {user && (
+              <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 truncate">
+                {user.name || user.username}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <ThemeToggle />
-          {/* Language Toggle */}
           <button
             onClick={() => setLanguage(language === 'np' ? 'en' : 'np')}
-            className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 rounded-md border border-slate-200 dark:border-slate-700"
+            className="flex items-center gap-1 text-[11px] font-bold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-full border border-slate-200/60 dark:border-slate-700/60 active:scale-95 transition-transform"
           >
-            <Globe size={13} /> {language === 'np' ? 'नेपाली' : 'EN'}
+            <Globe size={12} /> {language === 'np' ? 'नेपाली' : 'EN'}
           </button>
-          <Button variant="ghost" size="icon" onClick={() => logout()} className="text-slate-600 dark:text-slate-400">
-            <LogOut size={18} />
+          <Button variant="ghost" size="icon" onClick={() => logout()} className="h-8 w-8 text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full">
+            <LogOut size={15} />
           </Button>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
+      <main className="flex-1 overflow-y-auto pb-24 md:pb-0 relative z-10">
         {children}
       </main>
 
-      {/* Mobile Bottom Nav */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-around z-10 pb-safe">
+      {/* Mobile Floating Glass Bottom Dock */}
+      <div className="md:hidden fixed bottom-3 left-3 right-3 h-14 bg-white/85 dark:bg-slate-900/85 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800/80 rounded-2xl flex items-center justify-around z-30 px-2 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -138,12 +145,14 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
                key={item.href} 
                href={item.href}
                replace
-               className={`flex flex-col items-center justify-center w-full h-full gap-1 ${
+               className={`flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all duration-200 active:scale-95 ${
                  isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                }`}
              >
-               <item.icon size={20} className={isActive ? 'fill-emerald-50 dark:fill-emerald-950' : ''} />
-               <span className="text-[10px] font-medium">{item.name}</span>
+               <div className={`px-3 py-1 rounded-full transition-all ${isActive ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/25' : ''}`}>
+                 <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />
+               </div>
+               <span className={`text-[9px] ${isActive ? 'font-bold text-emerald-600 dark:text-emerald-400' : 'font-medium'}`}>{item.name}</span>
              </Link>
           )
         })}
