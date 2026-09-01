@@ -1,5 +1,3 @@
-'use client';
-
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/axios';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,12 +20,12 @@ import {
   Scale,
   ChevronDown,
   ChevronUp,
-  Loader2
+  Loader2,
+  Image as ImageIcon
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useState } from 'react';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import { toast } from 'sonner';
 
 const getStatusBadge = (status: string, t: any) => {
@@ -62,123 +60,49 @@ function ItemizedBillCard({ bill, roomName, t, formatDate, formatMoney, formatNu
     bill.status === 'PARTIALLY_PAID' ? 'border-l-[5px] border-l-amber-500' :
     'border-l-[5px] border-l-rose-500';
 
-  const handleDownloadPdf = async (e: React.MouseEvent) => {
+  const handleDownloadImage = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
       setIsDownloading(true);
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
+      const element = document.getElementById(`bill-receipt-${bill.id}`);
+      if (!element) {
+        toast.error('Receipt element not found');
+        return;
+      }
+
+      const wasExpanded = expanded;
+      if (!wasExpanded) setExpanded(true);
+
+      await new Promise(res => setTimeout(res, 100));
+
+      const dataUrl = await toPng(element, {
+        quality: 0.95,
+        backgroundColor: '#ffffff',
+        filter: (node: any) => {
+          return !node.classList?.contains('action-footer-ignore');
+        }
       });
-
-      // ── HEADER BANNER ──
-      pdf.setFillColor(16, 185, 129); // Emerald-500
-      pdf.rect(0, 0, 210, 28, 'F');
-
-      pdf.setTextColor(255, 255, 255);
-      pdf.setFontSize(15);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text('RENT & UTILITY BILL RECEIPT', 15, 13);
-
-      pdf.setFontSize(9);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text(`Room: ${roomName || 'Room'}   |   Bill Date: ${formatDate(bill.bill_date)}`, 15, 21);
-
-      // Status Badge Box
-      const statusText = bill.status === 'PAID' ? 'PAID' : bill.status === 'PARTIALLY_PAID' ? 'PARTIAL' : 'UNPAID';
-      pdf.setFillColor(255, 255, 255);
-      pdf.roundedRect(155, 7, 40, 13, 3, 3, 'F');
-      pdf.setTextColor(16, 185, 129);
-      pdf.setFontSize(9);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text(statusText, 175, 15, { align: 'center' });
-
-      // ── ITEMIZED TABLE HEADER ──
-      let y = 40;
-      pdf.setFillColor(241, 245, 249);
-      pdf.rect(15, y, 180, 8, 'F');
-      pdf.setTextColor(71, 85, 105);
-      pdf.setFontSize(9);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text('Service / Item Description', 20, y + 5.5);
-      pdf.text('Amount', 190, y + 5.5, { align: 'right' });
-
-      // ── ITEMIZED LINE ITEMS ──
-      y += 12;
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(30, 41, 59);
-
-      const items = [
-        { name: 'Room Rent', val: bill.room_rent },
-        { name: 'Water Bill', val: bill.water_bill },
-        { name: `Electricity Bill (${bill.electric_units_used || 0} units)`, val: bill.electric_bill },
-        { name: 'Internet Bill', val: bill.wifi_enabled ? bill.wifi_bill : 0 },
-        { name: 'Waste Management Bill', val: bill.waste_bill },
-      ];
-
-      items.forEach((item) => {
-        pdf.text(item.name, 20, y);
-        pdf.text(formatMoney(item.val), 190, y, { align: 'right' });
-        y += 7.5;
-      });
-
-      pdf.setDrawColor(226, 232, 240);
-      pdf.line(15, y, 195, y);
-      y += 6;
-
-      // ── SUB-TOTALS ──
-      pdf.setFont('helvetica', 'bold');
-      pdf.text('Current Month Subtotal:', 20, y);
-      pdf.text(formatMoney(bill.current_month_total), 190, y, { align: 'right' });
-      y += 7;
-
-      pdf.setTextColor(217, 119, 6);
-      pdf.text('Previous Arrears Balance:', 20, y);
-      pdf.text(formatMoney(bill.previous_balance), 190, y, { align: 'right' });
-      y += 9;
-
-      // ── GRAND TOTAL SUMMARY BOX ──
-      pdf.setFillColor(248, 250, 252);
-      pdf.roundedRect(15, y, 180, 27, 3, 3, 'F');
-      pdf.setDrawColor(203, 213, 225);
-      pdf.roundedRect(15, y, 180, 27, 3, 3, 'D');
-
-      pdf.setTextColor(37, 99, 235); // Blue
-      pdf.setFontSize(10);
-      pdf.text('Grand Total Amount:', 20, y + 8);
-      pdf.text(formatMoney(bill.grand_total), 190, y + 8, { align: 'right' });
-
-      pdf.setTextColor(5, 150, 105); // Green
-      pdf.text('Total Amount Paid:', 20, y + 16);
-      pdf.text(formatMoney(bill.amount_paid), 190, y + 16, { align: 'right' });
-
-      pdf.setTextColor(225, 29, 72); // Red
-      pdf.text('Remaining Balance Due:', 20, y + 23);
-      pdf.text(formatMoney(bill.remaining_balance), 190, y + 23, { align: 'right' });
-
-      // ── FOOTER ──
-      pdf.setFontSize(8);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(148, 163, 184);
-      pdf.text('Thank you! Generated by Rent & Utility Bill Collection System', 105, 280, { align: 'center' });
 
       const safeRoomName = (roomName || 'Room').replace(/[^a-zA-Z0-9]/g, '_');
-      const fileName = `Bill_Receipt_${safeRoomName}_${bill.billing_year}_${bill.billing_month}.pdf`;
-      
-      pdf.save(fileName);
-      toast.success(language === 'np' ? 'पिडिएफ रसिद डाउनलोड गरियो!' : 'PDF Receipt Downloaded Successfully!');
+      const fileName = `Bill_Receipt_${safeRoomName}_${bill.billing_year}_${bill.billing_month}.png`;
+
+      const link = document.createElement('a');
+      link.download = fileName;
+      link.href = dataUrl;
+      link.click();
+
+      toast.success(language === 'np' ? 'फोटो (PNG) रसिद डाउनलोड गरियो!' : 'Receipt Image Downloaded Successfully!');
     } catch (error: any) {
-      console.error('PDF download error:', error);
-      toast.error(language === 'np' ? 'डाउनलोड गर्न असफल भयो' : `Failed to download PDF: ${error.message || 'Error'}`);
+      console.error('Image download error:', error);
+      toast.error(language === 'np' ? 'फोटो डाउनलोड गर्न असफल भयो' : 'Failed to download receipt image');
     } finally {
       setIsDownloading(false);
     }
   };
 
   return (
-    <div id={`bill-receipt-${bill.id}`} className="bg-white dark:bg-slate-900 rounded-2xl">
-      <Card className={`border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white/90 dark:bg-slate-900/90 backdrop-blur-md overflow-hidden rounded-2xl ${accentBorder} transition-all`}>
+    <div id={`bill-receipt-${bill.id}`} className="bg-white dark:bg-slate-900 rounded-2xl p-1">
+      <Card className={`border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white dark:bg-slate-900 overflow-hidden rounded-2xl ${accentBorder} transition-all`}>
         {/* ── CARD HEADER ── */}
         <div 
           onClick={() => setExpanded(!expanded)}
@@ -325,21 +249,21 @@ function ItemizedBillCard({ bill, roomName, t, formatDate, formatMoney, formatNu
             </div>
 
             {/* ── ACTION FOOTER ── */}
-            <div className="pt-1" data-html2canvas-ignore="true">
+            <div className="pt-1 action-footer-ignore">
               <Button 
-                onClick={handleDownloadPdf}
+                onClick={handleDownloadImage}
                 disabled={isDownloading}
                 className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl h-10 text-xs shadow-sm shadow-emerald-500/20 transition-all font-extrabold cursor-pointer border-0 flex items-center justify-center gap-2" 
               >
                 {isDownloading ? (
                   <>
                     <Loader2 size={14} className="animate-spin" />
-                    <span>{language === 'np' ? 'डाउनलोड हुँदैछ...' : 'Downloading PDF...'}</span>
+                    <span>{language === 'np' ? 'डाउनलोड हुँदैछ...' : 'Downloading Image...'}</span>
                   </>
                 ) : (
                   <>
-                    <Download size={14} />
-                    <span>{language === 'np' ? 'पिडिएफ डाउनलोड गर्नुहोस्' : 'Download PDF Receipt'}</span>
+                    <ImageIcon size={14} />
+                    <span>{language === 'np' ? 'रसिद फोटो (PNG) डाउनलोड गर्नुहोस्' : 'Download Receipt Image (PNG)'}</span>
                   </>
                 )}
               </Button>
