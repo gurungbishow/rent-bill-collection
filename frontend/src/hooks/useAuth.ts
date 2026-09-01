@@ -34,9 +34,9 @@ export const useAuth = () => {
       toast.success('Logged in successfully');
       
       if (data.role === 'ADMIN') {
-        router.push('/admin/dashboard');
+        router.replace('/admin/dashboard');
       } else {
-        router.push('/room/dashboard');
+        router.replace('/room/dashboard');
       }
     },
     onError: (error: any) => {
@@ -51,7 +51,7 @@ export const useAuth = () => {
     onSuccess: () => {
       localStorage.removeItem('token');
       queryClient.setQueryData(['auth', 'me'], null);
-      router.push('/');
+      router.replace('/');
     },
   });
 

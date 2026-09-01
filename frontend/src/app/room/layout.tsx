@@ -23,7 +23,7 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== 'ROOM_USER')) {
-      router.push('/');
+      router.replace('/');
     }
   }, [user, isLoading, router]);
 
@@ -74,6 +74,7 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
               <Link 
                 key={item.href} 
                 href={item.href}
+                replace
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors ${
                   isActive 
                     ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 font-medium' 
@@ -136,6 +137,7 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
              <Link 
                key={item.href} 
                href={item.href}
+               replace
                className={`flex flex-col items-center justify-center w-full h-full gap-1 ${
                  isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                }`}

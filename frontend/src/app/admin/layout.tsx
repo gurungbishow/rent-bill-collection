@@ -25,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== 'ADMIN')) {
-      router.push('/');
+      router.replace('/');
     }
   }, [user, isLoading, router]);
 
@@ -81,6 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link 
                 key={item.href} 
                 href={item.href}
+                replace
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                   isActive 
                     ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md shadow-blue-500/20' 
@@ -149,6 +150,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
              <Link 
                key={item.href} 
                href={item.href}
+               replace
                className={`flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all duration-200 active:scale-95 ${
                  isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                }`}
