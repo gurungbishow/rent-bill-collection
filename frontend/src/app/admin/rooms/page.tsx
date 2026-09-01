@@ -356,7 +356,7 @@ export default function AdminRoomsPage() {
               className="group"
             >
               {/* ── CARD ── */}
-              <div className={`flex flex-col h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800/70 border-l-[4px] ${room.is_active ? 'border-l-emerald-500 dark:border-l-emerald-500' : 'border-l-slate-300 dark:border-l-slate-600'} shadow-sm group-hover:shadow-md group-hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 overflow-hidden`}>
+              <div className={`flex flex-col h-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200/70 dark:border-slate-800/70 border-l-[4px] ${room.is_active ? 'border-l-emerald-500 dark:border-l-emerald-500' : 'border-l-slate-300 dark:border-l-slate-600'} shadow-sm group-hover:shadow-md group-hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 overflow-hidden`}>
 
                 {/* Header */}
                 <div className={`${a.hdrBg} px-3 pt-3 pb-2 sm:px-4 sm:pt-4 sm:pb-2.5 flex items-start justify-between gap-2`}>

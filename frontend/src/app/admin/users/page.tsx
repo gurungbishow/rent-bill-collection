@@ -271,7 +271,7 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Users Table */}
-      <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white dark:bg-slate-900 overflow-hidden rounded-2xl">
+      <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white/80 dark:bg-slate-900/80 backdrop-blur-md overflow-hidden rounded-2xl">
         <Table>
           <TableHeader className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
             <TableRow>
