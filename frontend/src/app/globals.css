@@ -161,3 +161,32 @@ html[lang="np"] .text-sm,
 html.lang-np .text-sm {
   font-size: 0.9375rem !important; /* ~15px instead of 14px */
 }
+
+/* ── COMPACT TOAST NOTIFICATIONS ── */
+[data-sonner-toaster] [data-sonner-toast] {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  min-height: 32px !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.2rem !important;
+  gap: 6px !important;
+  border-radius: 0.5rem !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] [data-icon] {
+  margin-right: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] [data-title] {
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] [data-button] {
+  padding: 2px 8px !important;
+  height: 24px !important;
+  font-size: 0.75rem !important;
+}
