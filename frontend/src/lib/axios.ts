@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL) {
+    const url = process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '');
+    return `${url}/api`;
+  }
+  return '/api';
+};
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: getBaseUrl(),
   withCredentials: true,
 });
 

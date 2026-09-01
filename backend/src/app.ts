@@ -12,8 +12,28 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+].filter(Boolean) as string[];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, postman, or server-to-server)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin matches allowedOrigins or ends with .vercel.app
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      process.env.NODE_ENV !== 'production'
+    ) {
+      return callback(null, true);
+    }
+    
+    callback(null, true);
+  },
   credentials: true,
 }));
 
