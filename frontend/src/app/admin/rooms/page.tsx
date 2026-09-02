@@ -175,10 +175,19 @@ export default function AdminRoomsPage() {
       <div className="flex items-center justify-between gap-2">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t.rooms}</h1>
-          <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-200/60 dark:border-slate-700/60"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" />{totalCount} {language === 'np' ? 'कुल' : 'Total'}</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-200/60 dark:border-slate-700/60"><span className="w-1.5 h-1.5 rounded-full bg-slate-400" />{occupiedCount} {language === 'np' ? 'भरिएको' : 'Occupied'}</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/60"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />{vacantCount} {language === 'np' ? 'खाली' : 'Vacant'}</span>
+          <div className="flex items-center gap-3 mt-0.5 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              <span className="font-medium">{totalCount} {language === 'np' ? 'कुल' : 'Total'}</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+              <span className="font-medium">{occupiedCount} {language === 'np' ? 'भरिएको' : 'Occupied'}</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="font-medium">{vacantCount} {language === 'np' ? 'खाली' : 'Vacant'}</span>
+            </span>
           </div>
         </div>
 
