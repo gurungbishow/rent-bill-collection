@@ -227,8 +227,8 @@ export default function RoomDetailsPage({ params }: { params: Promise<{ id: stri
             <div className="flex items-center gap-2">
               <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 truncate">{room?.room_name}</h1>
               <Badge 
-                variant={room?.is_active ? "default" : "secondary"} 
-                className={room?.is_active ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-900/60 text-[10px] sm:text-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] sm:text-xs"}
+                variant="outline"
+                className={room?.is_active ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-[10px] sm:text-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80 text-[10px] sm:text-xs"}
               >
                 {room?.is_active ? (language === 'np' ? 'सक्रिय' : 'Active') : (language === 'np' ? 'निष्क्रिय' : 'Inactive')}
               </Badge>
@@ -665,33 +665,33 @@ export default function RoomDetailsPage({ params }: { params: Promise<{ id: stri
                 </div>
 
                 {/* Grand Total + Amount Paid */}
-                <div className="px-4 py-2.5 grid grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700/60">
+                <div className="px-4 py-2.5 grid grid-cols-2 gap-3 border-t border-slate-100 dark:border-slate-800/80">
                   <div>
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">
                       <CreditCard size={11} className="text-blue-500 flex-shrink-0" />
                       <span className="truncate">{t.grand_total}</span>
                     </div>
-                    <div className="font-extrabold text-sm text-blue-600 dark:text-blue-400 mt-0.5">{formatMoney(bill.grand_total)}</div>
+                    <div className="font-bold text-sm text-blue-600 dark:text-blue-400 mt-0.5">{formatMoney(bill.grand_total)}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">
                       <Banknote size={11} className="text-emerald-500 flex-shrink-0" />
                       <span className="truncate">{t.amount_paid}</span>
                     </div>
-                    <div className="font-extrabold text-sm text-emerald-600 dark:text-emerald-400 mt-0.5">{formatMoney(bill.amount_paid)}</div>
+                    <div className="font-bold text-sm text-emerald-600 dark:text-emerald-400 mt-0.5">{formatMoney(bill.amount_paid)}</div>
                   </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50/50 dark:bg-slate-900/50 divide-x divide-slate-200/80 dark:divide-slate-800 rounded-b-2xl overflow-hidden mt-auto">
+                <div className="border-t border-slate-100 dark:border-slate-800 flex items-stretch h-10 bg-slate-50/60 dark:bg-slate-900/60 divide-x divide-slate-100 dark:divide-slate-800 rounded-b-2xl overflow-hidden mt-auto">
                   <Link href={`/admin/bills/${bill.id}`} className="flex-1 flex items-stretch">
-                    <button className="w-full h-full text-[11px] font-extrabold text-blue-700 dark:text-blue-300 bg-blue-50/70 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 active:bg-blue-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl">
+                    <button className="w-full h-full text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-blue-950/40 active:bg-blue-100 dark:active:bg-blue-900/50 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl">
                       <Eye size={13} /> {t.view}
                     </button>
                   </Link>
                   <button
                     onClick={() => handleDeletePrompt(bill)}
-                    className="flex-1 h-full text-[11px] font-extrabold text-red-700 dark:text-red-300 bg-red-50/70 dark:bg-red-950/60 hover:bg-red-100 dark:hover:bg-red-900/60 active:bg-red-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-br-2xl"
+                    className="flex-1 h-full text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50/80 dark:hover:bg-red-950/40 active:bg-red-100 dark:active:bg-red-900/50 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-br-2xl"
                   >
                     <Trash2 size={13} /> {t.delete}
                   </button>
@@ -838,7 +838,7 @@ export default function RoomDetailsPage({ params }: { params: Promise<{ id: stri
                   ...editBillForm,
                   bill_date: editBillForm.bs_date ? bsToAd(editBillForm.bs_date)?.toISOString() : undefined
                 };
-                // @ts-ignore
+                // @ts-expect-error // payload cleanup
                 delete payload.bs_date;
                 updateBillMutation.mutate(payload);
               }}

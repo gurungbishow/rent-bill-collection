@@ -182,9 +182,24 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'PAID': return <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">{t.paid}</Badge>;
-      case 'PARTIALLY_PAID': return <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-200">{t.partial}</Badge>;
-      default: return <Badge className="bg-red-100 text-red-700 hover:bg-red-200">{t.unpaid}</Badge>;
+      case 'PAID':
+        return (
+          <span className="inline-flex items-center text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 tracking-wider">
+            {t.paid}
+          </span>
+        );
+      case 'PARTIALLY_PAID':
+        return (
+          <span className="inline-flex items-center text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60 tracking-wider">
+            {t.partial}
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border border-red-200/80 dark:border-red-800/60 tracking-wider">
+            {t.unpaid}
+          </span>
+        );
     }
   };
 
@@ -242,22 +257,18 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         <div className="lg:col-span-2 space-y-4">
-          {/* ── MAIN RECEIPT CARD WITH STATUS RIBBON ── */}
-          <Card className={`border border-slate-200/70 dark:border-slate-800/70 border-l-[4px] ${
-            bill.status === 'PAID' ? 'border-l-emerald-500 dark:border-l-emerald-500' :
-            bill.status === 'PARTIALLY_PAID' ? 'border-l-amber-500 dark:border-l-amber-500' :
-            'border-l-red-500 dark:border-l-red-500'
-          } shadow-sm bg-white dark:bg-slate-900 rounded-2xl overflow-hidden print:shadow-none print:border-none`}>
+          {/* ── MAIN RECEIPT CARD WITH UNIFORM BORDER ── */}
+          <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white dark:bg-slate-900 rounded-2xl overflow-hidden print:shadow-none print:border-none">
             
             <CardHeader className="text-center border-b border-slate-100 dark:border-slate-800/60 pb-3 pt-4 px-4 md:px-6 bg-slate-50/50 dark:bg-slate-900/50">
-              <h1 className="text-base md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">{t.receipt_title}</h1>
-              <p className="text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+              <h1 className="text-base md:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">{t.receipt_title}</h1>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
                 {t.receipt_subtitle} {bill.room?.room_name && (language === 'np' ? `${bill.room.room_name} को` : `of ${bill.room.room_name}`)}
               </p>
               <div className="mt-3 flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800/60">
                 <div className="text-left">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t.date}</p>
-                  <p className="text-xs md:text-sm text-slate-900 dark:text-slate-100 font-bold mt-0.5">{displayDateStr}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t.date}</p>
+                  <p className="text-xs md:text-sm text-slate-900 dark:text-slate-100 font-semibold mt-0.5">{displayDateStr}</p>
                 </div>
                 <div className="text-right">
                   {getStatusBadge(bill.status)}
@@ -267,7 +278,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
             <CardContent className="pt-3 md:pt-4 px-4 md:px-6 space-y-3">
               <div
-                className="flex justify-between items-center py-1.5 text-xs sm:text-sm cursor-pointer text-slate-700 dark:text-slate-300 font-bold print:hidden"
+                className="flex justify-between items-center py-1.5 text-xs sm:text-sm cursor-pointer text-slate-700 dark:text-slate-300 font-semibold print:hidden"
                 onClick={() => setShowBreakdown(!showBreakdown)}
               >
                 <span className="flex items-center gap-1.5">
@@ -285,7 +296,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       <Droplets size={12} />
                     </div>
                     <div>
-                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.water_np}</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm">{t.water_np}</span>
                       {bill.prorate_details && bill.prorate_details.baseWater !== undefined && (
                         <p className="text-[10px] text-slate-500 dark:text-slate-400">
                           {formatMoney(bill.prorate_details.baseWater)} / 30 × {bill.prorate_details.days} days
@@ -293,7 +304,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       )}
                     </div>
                   </div>
-                  <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatMoney(bill.water_bill)}</span>
+                  <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100">{formatMoney(bill.water_bill)}</span>
                 </div>
 
                 {/* Electricity */}
@@ -303,13 +314,13 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       <Zap size={12} />
                     </div>
                     <div>
-                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.electricity_np}</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm">{t.electricity_np}</span>
                       <p className="text-[10px] text-slate-500 dark:text-slate-400">
                         {formatNumber(bill.pres_electric_unit)} - {formatNumber(bill.prev_electric_unit)} = {formatNumber(bill.electric_units_used)} units × {formatMoney(bill.electric_rate)}
                       </p>
                     </div>
                   </div>
-                  <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatMoney(bill.electric_bill)}</span>
+                  <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100">{formatMoney(bill.electric_bill)}</span>
                 </div>
 
                 {/* Waste */}
@@ -319,7 +330,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       <Trash2 size={12} />
                     </div>
                     <div>
-                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.waste_np}</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm">{t.waste_np}</span>
                       {bill.prorate_details && bill.prorate_details.baseWaste !== undefined && (
                         <p className="text-[10px] text-slate-500 dark:text-slate-400">
                           {formatMoney(bill.prorate_details.baseWaste)} / 30 × {bill.prorate_details.days} days
@@ -327,7 +338,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       )}
                     </div>
                   </div>
-                  <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatMoney(bill.waste_bill)}</span>
+                  <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100">{formatMoney(bill.waste_bill)}</span>
                 </div>
 
                 {/* Wifi */}
@@ -338,7 +349,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                         <Wifi size={12} />
                       </div>
                       <div>
-                        <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.wifi_np}</span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm">{t.wifi_np}</span>
                         {bill.prorate_details && bill.prorate_details.baseWifi !== undefined && (
                           <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             {formatMoney(bill.prorate_details.baseWifi)} / 30 × {bill.prorate_details.days} days
@@ -346,7 +357,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                         )}
                       </div>
                     </div>
-                    <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatMoney(bill.wifi_bill)}</span>
+                    <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100">{formatMoney(bill.wifi_bill)}</span>
                   </div>
                 )}
 
@@ -357,7 +368,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       <Home size={12} />
                     </div>
                     <div>
-                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.rent_np}</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm">{t.rent_np}</span>
                       {bill.prorate_details && bill.prorate_details.baseRent !== undefined && (
                         <p className="text-[10px] text-slate-500 dark:text-slate-400">
                           {formatMoney(bill.prorate_details.baseRent)} / 30 × {bill.prorate_details.days} days
@@ -365,7 +376,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       )}
                     </div>
                   </div>
-                  <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatMoney(bill.room_rent)}</span>
+                  <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100">{formatMoney(bill.room_rent)}</span>
                 </div>
               </div>
 
@@ -373,13 +384,13 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
               <div className="pt-2 md:pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1.5 bg-slate-50/70 dark:bg-slate-800/40 -mx-4 md:-mx-6 px-4 md:px-6 py-2.5 rounded-xl">
                 <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200 text-xs md:text-sm">
                   <span>{t.current_total}</span>
-                  <span className="font-bold">{formatMoney(bill.current_month_total)}</span>
+                  <span className="font-semibold">{formatMoney(bill.current_month_total)}</span>
                 </div>
                 <div className="flex justify-between text-amber-700 dark:text-amber-400 font-semibold text-xs md:text-sm">
                   <span>{t.prev_balance}</span>
-                  <span className="font-bold">{formatMoney(bill.previous_balance)}</span>
+                  <span className="font-semibold">{formatMoney(bill.previous_balance)}</span>
                 </div>
-                <div className="flex justify-between text-xs sm:text-sm md:text-base font-extrabold text-blue-700 dark:text-blue-300 border-t border-slate-200 dark:border-slate-700/60 pt-2 mt-1">
+                <div className="flex justify-between text-xs sm:text-sm md:text-base font-bold text-blue-700 dark:text-blue-300 border-t border-slate-200 dark:border-slate-700/60 pt-2 mt-1">
                   <span>{t.grand_total}</span>
                   <span>{formatMoney(bill.grand_total)}</span>
                 </div>
@@ -387,11 +398,11 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
               {/* Paid & Remaining */}
               <div className="space-y-1.5 pt-1 text-xs md:text-sm">
-                <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-bold">
+                <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-semibold">
                   <span>{t.amount_paid}</span>
                   <span>{formatMoney(bill.amount_paid)}</span>
                 </div>
-                <div className="flex justify-between text-red-600 dark:text-red-400 font-extrabold">
+                <div className="flex justify-between text-red-600 dark:text-red-400 font-semibold">
                   <span>{t.remaining_balance}</span>
                   <span>{formatMoney(bill.remaining_balance)}</span>
                 </div>
@@ -403,14 +414,14 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
         {/* ── SIDEBAR PAYMENT COLLECTION & HISTORY ── */}
         <div className="space-y-4 print:hidden">
           {/* Payment Action Card */}
-          <Card className="border border-slate-200/70 dark:border-slate-800/70 shadow-sm bg-white dark:bg-slate-900 rounded-2xl overflow-hidden pb-0">
+          <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white dark:bg-slate-900 rounded-2xl overflow-hidden pb-0">
             <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 py-3 px-4">
-              <CardTitle className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">{t.payment_collection}</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider">{t.payment_collection}</CardTitle>
             </CardHeader>
             <CardContent className="py-3 px-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-semibold">{t.remaining_balance}</span>
-                <span className={`text-sm md:text-lg font-black ${remaining > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">{t.remaining_balance}</span>
+                <span className={`text-sm md:text-lg font-bold ${remaining > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                   {formatMoney(remaining)}
                 </span>
               </div>
@@ -428,7 +439,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                     note: 'Full payment'
                   });
                 }}
-                className="flex-1 font-extrabold text-xs text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-600 hover:to-teal-600 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer rounded-bl-2xl"
+                className="flex-1 font-semibold text-xs text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-600 hover:to-teal-600 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer rounded-bl-2xl"
               >
                 <Banknote size={15} />
                 <span>{t.full_payment}</span>
@@ -439,7 +450,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                   <button
                     type="button"
                     disabled={remaining <= 0}
-                    className="flex-1 font-extrabold text-xs text-white bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer rounded-br-2xl"
+                    className="flex-1 font-semibold text-xs text-white bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer rounded-br-2xl"
                   >
                     <Plus size={15} />
                     <span>{t.partial_payment}</span>
@@ -450,23 +461,23 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                     <DialogTitle>{t.record_payment}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label>{t.amount_paid} (Rs)</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{t.amount_paid} (Rs)</Label>
                       <Input
                         type="number"
-                        className="h-8 text-xs"
+                        className="h-9 text-xs rounded-lg"
                         placeholder={remaining ? remaining.toString() : '0'}
                         value={paymentForm.amount}
                         onChange={(e) => setPaymentForm({ ...paymentForm, amount: e.target.value })}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label>{t.payment_method}</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{t.payment_method}</Label>
                       <Select
                         value={paymentForm.payment_method}
                         onValueChange={(val: any) => setPaymentForm({ ...paymentForm, payment_method: val || 'CASH' })}
                       >
-                        <SelectTrigger className="h-8 text-xs">
+                        <SelectTrigger className="h-9 text-xs rounded-lg">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -477,10 +488,10 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="space-y-2">
-                      <Label>{language === 'np' ? 'कैफियत (Note)' : 'Note'}</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{language === 'np' ? 'कैफियत (Note)' : 'Note'}</Label>
                       <Input
-                        className="h-8 text-xs"
+                        className="h-9 text-xs rounded-lg"
                         placeholder={language === 'np' ? 'जस्तै: अग्रिम भुक्तानी, चेक नं.' : 'e.g. advance, cheque #'}
                         value={paymentForm.note}
                         onChange={(e) => setPaymentForm({ ...paymentForm, note: e.target.value })}
@@ -491,14 +502,13 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                     <Button type="button" variant="ghost" onClick={() => setPaymentOpen(false)} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">{t.cancel}</Button>
                     <Button
                       type="button"
-                      variant="ghost"
                       onClick={() => paymentMutation.mutate({
                         amount: paymentForm.amount,
                         payment_method: paymentForm.payment_method || (paymentForm as any).method || 'CASH',
                         note: paymentForm.note
                       })}
                       disabled={!paymentForm.amount || paymentMutation.isPending}
-                      className="text-blue-600 dark:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                      className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold"
                     >
                       {paymentMutation.isPending ? t.loading : t.save}
                     </Button>
@@ -509,11 +519,11 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
           </Card>
 
           {/* Payment History */}
-          <Card className="border border-slate-200/70 dark:border-slate-800/70 shadow-sm bg-white dark:bg-slate-900 rounded-2xl overflow-hidden">
+          <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white dark:bg-slate-900 rounded-2xl overflow-hidden">
             <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 py-2.5 px-4 flex flex-row items-center justify-between space-y-0">
-              <CardTitle className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">{t.payment_history}</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider">{t.payment_history}</CardTitle>
               {payments?.length > 0 && (
-                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/50">
+                <span className="text-[10px] sm:text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/50">
                   {payments.length} {language === 'np' ? 'भुक्तानी' : 'record(s)'}
                 </span>
               )}
@@ -525,7 +535,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                   <Skeleton className="h-10 w-full" />
                 </div>
               ) : payments?.length === 0 ? (
-                <div className="p-6 text-center text-xs font-semibold text-slate-400 dark:text-slate-500">
+                <div className="p-6 text-center text-xs font-medium text-slate-400 dark:text-slate-500">
                   {language === 'np' ? 'कुनै भुक्तानी फेला परेन' : 'No payments recorded yet'}
                 </div>
               ) : (
@@ -537,7 +547,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                           {payment.payment_method === 'CASH' ? <Banknote size={16} /> : <CreditCard size={16} />}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-slate-100 tracking-tight">{formatMoney(payment.amount)}</p>
+                          <p className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-slate-100 tracking-tight">{formatMoney(payment.amount)}</p>
                           <div className="flex items-center gap-1.5 mt-0.5 text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium flex-wrap">
                             <span className="flex items-center gap-1">
                               <Calendar size={11} className="text-slate-400 shrink-0" />
@@ -552,38 +562,38 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
                       <div className="flex items-center gap-1.5 flex-shrink-0">
                         {payment.payment_method === 'CASH' && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 tracking-wider">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 tracking-wider">
                             <Banknote size={11} className="text-emerald-500 shrink-0" />
                             <span>CASH</span>
                           </span>
                         )}
                         {payment.payment_method === 'ESEWA' && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-lime-50 dark:bg-lime-950/60 text-lime-700 dark:text-lime-300 border border-lime-200/80 dark:border-lime-800/60 tracking-wider">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-lime-50 dark:bg-lime-950/60 text-lime-700 dark:text-lime-300 border border-lime-200/80 dark:border-lime-800/60 tracking-wider">
                             <Smartphone size={11} className="text-lime-500 shrink-0" />
                             <span>eSewa</span>
                           </span>
                         )}
                         {payment.payment_method === 'KHALTI' && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200/80 dark:border-purple-800/60 tracking-wider">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200/80 dark:border-purple-800/60 tracking-wider">
                             <Wallet size={11} className="text-purple-500 shrink-0" />
                             <span>Khalti</span>
                           </span>
                         )}
                         {payment.payment_method === 'BANK' && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/60 tracking-wider">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/60 tracking-wider">
                             <Building2 size={11} className="text-blue-500 shrink-0" />
                             <span>Bank</span>
                           </span>
                         )}
                         {payment.payment_method !== 'CASH' && payment.payment_method !== 'ESEWA' && payment.payment_method !== 'KHALTI' && payment.payment_method !== 'BANK' && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60 tracking-wider">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60 tracking-wider">
                             {payment.payment_method}
                           </span>
                         )}
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8.5 w-8.5 text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 rounded-full transition-all active:scale-90"
+                          className="h-8 w-8 text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 rounded-full transition-all active:scale-90"
                           onClick={() => {
                             setEditingPaymentId(payment.id);
                             setEditPaymentForm({
@@ -595,17 +605,17 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                           }}
                           title={t.edit || 'Edit'}
                         >
-                          <Pencil size={15} className="text-amber-500 dark:text-amber-400" />
+                          <Pencil size={14} className="text-amber-500 dark:text-amber-400" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8.5 w-8.5 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-full transition-all active:scale-90"
+                          className="h-8 w-8 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-full transition-all active:scale-90"
                           onClick={() => setDeletePaymentId(payment.id)}
                           disabled={deletePaymentMutation.isPending}
                           title={t.delete || 'Delete'}
                         >
-                          <Trash2 size={15} className="text-red-500 dark:text-red-400" />
+                          <Trash2 size={14} className="text-red-500 dark:text-red-400" />
                         </Button>
                       </div>
                     </div>
@@ -620,22 +630,22 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                   <DialogTitle>{t.edit_payment}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
-                  <div className="space-y-2">
-                    <Label>{t.amount_paid} (Rs)</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{t.amount_paid} (Rs)</Label>
                     <Input
                       type="number"
-                      className="h-8 text-xs"
+                      className="h-9 text-xs rounded-lg"
                       value={editPaymentForm.amount}
                       onChange={(e) => setEditPaymentForm({ ...editPaymentForm, amount: e.target.value })}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label>{t.payment_method}</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{t.payment_method}</Label>
                     <Select
                       value={editPaymentForm.payment_method}
                       onValueChange={(val: any) => setEditPaymentForm({ ...editPaymentForm, payment_method: val || 'CASH' })}
                     >
-                      <SelectTrigger className="h-8 text-xs">
+                      <SelectTrigger className="h-9 text-xs rounded-lg">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -646,10 +656,10 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label>{language === 'np' ? 'कैफियत (Note)' : 'Note'}</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{language === 'np' ? 'कैफियत (Note)' : 'Note'}</Label>
                     <Input
-                      className="h-8 text-xs"
+                      className="h-9 text-xs rounded-lg"
                       placeholder={language === 'np' ? 'जस्तै: अग्रिम भुक्तानी, चेक नं.' : 'e.g. advance, cheque #'}
                       value={editPaymentForm.note}
                       onChange={(e) => setEditPaymentForm({ ...editPaymentForm, note: e.target.value })}
@@ -660,14 +670,13 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                   <Button type="button" variant="ghost" onClick={() => setEditPaymentOpen(false)} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">{t.cancel}</Button>
                   <Button
                     type="button"
-                    variant="ghost"
                     onClick={() => updatePaymentMutation.mutate({
                       amount: editPaymentForm.amount,
                       payment_method: editPaymentForm.payment_method,
                       note: editPaymentForm.note
                     })}
                     disabled={!editPaymentForm.amount || updatePaymentMutation.isPending}
-                    className="text-blue-600 dark:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                    className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold"
                   >
                     {updatePaymentMutation.isPending ? t.loading : t.save}
                   </Button>
@@ -680,9 +689,9 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
               <DialogContent className="sm:max-w-[425px] rounded-2xl overflow-hidden">
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
-                    <AlertTriangle size={20} /> {language === 'np' ? 'भुक्तानी मेटाउनुहोस्' : 'Delete Payment'}
+                    <AlertTriangle size={18} /> {language === 'np' ? 'भुक्तानी मेटाउनुहोस्' : 'Delete Payment'}
                   </DialogTitle>
-                  <p className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 p-2.5 rounded border border-red-100 dark:border-red-900/40 mt-3">
+                  <p className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 p-2.5 rounded-lg border border-red-100 dark:border-red-900/40 mt-3">
                     {language === 'np' ? 'के तपाईं यो भुक्तानी मेटाउन निश्चित हुनुहुन्छ? यो प्रक्रिया उल्टाउन सकिँदैन।' : 'Are you sure you want to delete this payment? This action cannot be undone.'}
                   </p>
                 </DialogHeader>
@@ -690,10 +699,9 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                   <Button type="button" variant="ghost" onClick={() => setDeletePaymentId(null)} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">{t.cancel}</Button>
                   <Button
                     type="button"
-                    variant="ghost"
                     onClick={() => deletePaymentId && deletePaymentMutation.mutate(deletePaymentId)}
                     disabled={deletePaymentMutation.isPending}
-                    className="text-red-600 dark:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-900/20"
+                    className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold"
                   >
                     {deletePaymentMutation.isPending ? t.loading : t.delete}
                   </Button>
@@ -708,7 +716,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[480px] max-h-[90vh] overflow-y-auto rounded-2xl p-0 overflow-hidden bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xl">
           <DialogHeader className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-800/50">
-            <DialogTitle className="text-sm sm:text-base font-extrabold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+            <DialogTitle className="text-sm sm:text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
               <div className="h-6 w-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                 <Pencil size={13} />
               </div>
@@ -718,8 +726,8 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
           <div className="space-y-3.5 p-4 text-xs sm:text-sm">
             {/* Date */}
-            <div className="space-y-1">
-              <Label className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <Calendar size={12} className="text-blue-500" />
                 {t.date}
               </Label>
@@ -732,28 +740,28 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
             {/* Rent & Water */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <Label className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                   <Home size={12} className="text-emerald-500" />
                   {t.rent}
                 </Label>
                 <Input
                   type="number"
                   step="any"
-                  className="h-8.5 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-xl"
+                  className="h-9 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-lg"
                   value={editForm.room_rent}
                   onChange={(e) => setEditForm({ ...editForm, room_rent: e.target.value === '' ? '' as any : Number(e.target.value) })}
                 />
               </div>
-              <div className="space-y-1">
-                <Label className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                   <Droplets size={12} className="text-blue-500" />
                   {t.water}
                 </Label>
                 <Input
                   type="number"
                   step="any"
-                  className="h-8.5 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-xl"
+                  className="h-9 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-lg"
                   value={editForm.water_bill}
                   onChange={(e) => setEditForm({ ...editForm, water_bill: e.target.value === '' ? '' as any : Number(e.target.value) })}
                 />
@@ -762,22 +770,22 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
             {/* Waste & Wifi */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <Label className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                   <Trash2 size={12} className="text-rose-500" />
                   {t.waste}
                 </Label>
                 <Input
                   type="number"
                   step="any"
-                  className="h-8.5 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-xl"
+                  className="h-9 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-lg"
                   value={editForm.waste_bill}
                   onChange={(e) => setEditForm({ ...editForm, waste_bill: e.target.value === '' ? '' as any : Number(e.target.value) })}
                 />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex justify-between items-center mb-0.5">
-                  <Label className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                  <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                     <Wifi size={12} className="text-violet-500" />
                     {t.wifi}
                   </Label>
@@ -789,7 +797,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                 <Input
                   type="number"
                   step="any"
-                  className="h-8.5 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-xl"
+                  className="h-9 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-lg"
                   disabled={!editForm.wifi_enabled}
                   value={editForm.wifi_bill}
                   onChange={(e) => setEditForm({ ...editForm, wifi_bill: e.target.value === '' ? '' as any : Number(e.target.value) })}
@@ -799,56 +807,56 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
 
             {/* Electricity Card Box */}
             <div className="p-3 bg-amber-50/40 dark:bg-amber-950/20 rounded-2xl space-y-2.5 border border-amber-200/60 dark:border-amber-900/40">
-              <div className="flex items-center gap-1.5 text-xs font-extrabold text-amber-800 dark:text-amber-300">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300">
                 <Zap size={14} className="text-amber-500" />
                 <span>{t.electricity}</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="space-y-1">
-                  <Label className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{t.prev_unit}</Label>
+                  <Label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t.prev_unit}</Label>
                   <Input
                     type="number"
-                    className="h-8 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
+                    className="h-9 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
                     value={editForm.prev_electric_unit}
                     onChange={(e) => setEditForm({ ...editForm, prev_electric_unit: e.target.value === '' ? '' as any : Number(e.target.value) })}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{t.pres_unit}</Label>
+                  <Label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t.pres_unit}</Label>
                   <Input
                     type="number"
-                    className="h-8 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
+                    className="h-9 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
                     value={editForm.pres_electric_unit}
                     onChange={(e) => setEditForm({ ...editForm, pres_electric_unit: e.target.value === '' ? '' as any : Number(e.target.value) })}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{t.rate_per_unit}</Label>
+                  <Label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t.rate_per_unit}</Label>
                   <Input
                     type="number"
                     step="0.01"
-                    className="h-8 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
+                    className="h-9 text-xs px-2 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg"
                     value={editForm.electric_rate}
                     onChange={(e) => setEditForm({ ...editForm, electric_rate: e.target.value === '' ? '' as any : Number(e.target.value) })}
                   />
                 </div>
               </div>
               <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-300 pt-1 border-t border-amber-200/40 dark:border-amber-900/30">
-                <span className="text-[11px]">{t.units_used}: <strong className="text-slate-900 dark:text-slate-100">{formatNumber(editElectricUnits)}</strong></span>
-                <span className="text-[11px]">{t.electricity}: <strong className="text-amber-700 dark:text-amber-300 font-extrabold">{formatMoney(editElectricBill)}</strong></span>
+                <span className="text-[11px]">{t.units_used}: <strong className="text-slate-900 dark:text-slate-100 font-semibold">{formatNumber(editElectricUnits)}</strong></span>
+                <span className="text-[11px]">{t.electricity}: <strong className="text-amber-700 dark:text-amber-300 font-semibold">{formatMoney(editElectricBill)}</strong></span>
               </div>
             </div>
 
             {/* Previous Balance */}
-            <div className="space-y-1">
-              <Label className="text-xs font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
                 <History size={12} className="text-amber-500" />
                 {t.prev_balance}
               </Label>
               <Input
                 type="number"
                 step="any"
-                className="h-8.5 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-xl"
+                className="h-9 text-xs bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 rounded-lg"
                 value={editForm.previous_balance}
                 onChange={(e) => setEditForm({ ...editForm, previous_balance: e.target.value === '' ? '' as any : Number(e.target.value) })}
               />
@@ -858,11 +866,11 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
             <div className="p-3 bg-blue-50/70 dark:bg-blue-950/40 rounded-2xl space-y-1.5 text-xs border border-blue-100 dark:border-blue-900/50">
               <div className="flex justify-between text-slate-600 dark:text-slate-400 font-medium">
                 <span>{t.current_total}:</span>
-                <span className="font-bold text-slate-900 dark:text-slate-100">{formatMoney(editCurrentMonthTotal)}</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-100">{formatMoney(editCurrentMonthTotal)}</span>
               </div>
-              <div className="flex justify-between text-slate-900 dark:text-slate-100 font-black text-xs sm:text-sm pt-1 border-t border-blue-200/80 dark:border-blue-900/80">
-                <span className="text-blue-700 dark:text-blue-300">{t.grand_total}:</span>
-                <span className="text-blue-700 dark:text-blue-300 font-black">{formatMoney(editGrandTotal)}</span>
+              <div className="flex justify-between text-slate-900 dark:text-slate-100 font-semibold text-xs sm:text-sm pt-1 border-t border-blue-200/80 dark:border-blue-900/80">
+                <span className="text-blue-700 dark:text-blue-300 font-semibold">{t.grand_total}:</span>
+                <span className="text-blue-700 dark:text-blue-300 font-bold">{formatMoney(editGrandTotal)}</span>
               </div>
             </div>
           </div>
@@ -892,7 +900,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
                 updateBillMutation.mutate(payload);
               }}
               disabled={updateBillMutation.isPending}
-              className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold"
+              className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold"
             >
               {updateBillMutation.isPending ? t.loading : (language === 'np' ? 'परिवर्तनहरू बचत गर्नुहोस्' : 'Save Changes')}
             </Button>
@@ -904,7 +912,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
         <DialogContent className="sm:max-w-[425px] rounded-2xl p-0 overflow-hidden bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xl">
           <DialogHeader className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-800/50">
-            <DialogTitle className="text-sm sm:text-base font-extrabold flex items-center gap-2 text-red-600 dark:text-red-400">
+            <DialogTitle className="text-sm sm:text-base font-bold flex items-center gap-2 text-red-600 dark:text-red-400">
               <AlertTriangle size={18} />
               <span>{t.delete_bill}</span>
             </DialogTitle>
@@ -912,7 +920,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
           <div className="p-4 text-xs sm:text-sm text-slate-600 dark:text-slate-400 space-y-2.5">
             <p>
               {language === 'np' ? 'के तपाईं ' : 'Are you sure you want to delete the bill for '}
-              <strong className="text-slate-900 dark:text-slate-100">
+              <strong className="text-slate-900 dark:text-slate-100 font-semibold">
                 {bill ? formatDate(bill.bill_date) : ''}
               </strong>
               {language === 'np' ? ' को बिल मेटाउन निश्चित हुनुहुन्छ?' : '?'}
@@ -927,7 +935,7 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
               type="button"
               onClick={() => deleteBillMutation.mutate()}
               disabled={deleteBillMutation.isPending}
-              className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold"
+              className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold"
             >
               {deleteBillMutation.isPending ? t.loading : t.delete}
             </Button>
@@ -1100,10 +1108,10 @@ export default function BillDetailsPage({ params }: { params: Promise<{ id: stri
           </div>
           
           {/* Edge-to-Edge 50/50 Split Action Bar */}
-          <div className="border-t border-slate-200/80 flex items-stretch h-11 bg-slate-50 divide-x divide-slate-200/80 rounded-b-2xl overflow-hidden">
+          <div className="border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50 dark:bg-slate-900 divide-x divide-slate-200/80 dark:divide-slate-800 rounded-b-2xl overflow-hidden">
             <button 
               type="button"
-              className="flex-1 font-extrabold text-xs text-slate-700 bg-white hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl" 
+              className="flex-1 font-extrabold text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl" 
               onClick={async () => {
                 if (!receiptRef.current) return;
                 try {

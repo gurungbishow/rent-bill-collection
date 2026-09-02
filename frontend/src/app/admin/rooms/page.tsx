@@ -174,11 +174,11 @@ export default function AdminRoomsPage() {
       {/* ── HEADER ROW ── */}
       <div className="flex items-center justify-between gap-2">
         <div>
-          <h1 className="text-lg sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">{t.rooms}</h1>
-          <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded-full"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" />{totalCount} {language === 'np' ? 'कुल' : 'Total'}</span>
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded-full"><span className="w-1.5 h-1.5 rounded-full bg-slate-500" />{occupiedCount} {language === 'np' ? 'भरिएको' : 'Occupied'}</span>
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />{vacantCount} {language === 'np' ? 'खाली' : 'Vacant'}</span>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t.rooms}</h1>
+          <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-200/60 dark:border-slate-700/60"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" />{totalCount} {language === 'np' ? 'कुल' : 'Total'}</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-200/60 dark:border-slate-700/60"><span className="w-1.5 h-1.5 rounded-full bg-slate-400" />{occupiedCount} {language === 'np' ? 'भरिएको' : 'Occupied'}</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/60"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />{vacantCount} {language === 'np' ? 'खाली' : 'Vacant'}</span>
           </div>
         </div>
 
@@ -338,14 +338,14 @@ export default function AdminRoomsPage() {
           </div>
         )}
 
-        {filteredRooms?.map((room: any, idx: number) => {
+        {filteredRooms?.map((room: any) => {
           const accents = [
-            { icon: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400', hdrBg: 'bg-blue-50/60 dark:bg-blue-950/30', hdrText: 'text-blue-700 dark:text-blue-300' },
-            { icon: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400', hdrBg: 'bg-emerald-50/60 dark:bg-emerald-950/30', hdrText: 'text-emerald-700 dark:text-emerald-300' },
-            { icon: 'bg-violet-50 dark:bg-violet-950/40 text-violet-600 dark:text-violet-400', hdrBg: 'bg-violet-50/60 dark:bg-violet-950/30', hdrText: 'text-violet-700 dark:text-violet-300' },
-            { icon: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400', hdrBg: 'bg-amber-50/60 dark:bg-amber-950/30', hdrText: 'text-amber-700 dark:text-amber-300' },
-            { icon: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400', hdrBg: 'bg-rose-50/60 dark:bg-rose-950/30', hdrText: 'text-rose-700 dark:text-rose-300' },
-            { icon: 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400', hdrBg: 'bg-cyan-50/60 dark:bg-cyan-950/30', hdrText: 'text-cyan-700 dark:text-cyan-300' },
+            { icon: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400' },
+            { icon: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' },
+            { icon: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400' },
+            { icon: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400' },
+            { icon: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400' },
+            { icon: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400' },
           ];
           const idNum = typeof room.id === 'number' ? room.id : String(room.id).split('').reduce((acc: number, c: string) => acc + c.charCodeAt(0), 0);
           const a = accents[idNum % accents.length];
@@ -356,19 +356,19 @@ export default function AdminRoomsPage() {
               className="group"
             >
               {/* ── CARD ── */}
-              <div className={`flex flex-col h-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200/70 dark:border-slate-800/70 border-l-[4px] ${room.is_active ? 'border-l-emerald-500 dark:border-l-emerald-500' : 'border-l-slate-300 dark:border-l-slate-600'} shadow-sm group-hover:shadow-md group-hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 overflow-hidden`}>
+              <div className="flex flex-col h-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs group-hover:shadow-md group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200 overflow-hidden">
 
                 {/* Header */}
-                <div className={`${a.hdrBg} px-3 pt-3 pb-2 sm:px-4 sm:pt-4 sm:pb-2.5 flex items-start justify-between gap-2`}>
+                <div className="px-3.5 pt-3.5 pb-2 sm:px-4 sm:pt-4 sm:pb-2.5 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div className={`h-8 w-8 rounded-xl ${a.icon} flex items-center justify-center flex-shrink-0`}>
                       <Home size={15} />
                     </div>
-                    <h3 className={`font-bold ${a.hdrText} text-sm leading-tight truncate`}>{room.room_name}</h3>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base leading-tight truncate">{room.room_name}</h3>
                   </div>
                   <div onClick={e => e.stopPropagation()} className="flex-shrink-0">
                     <DropdownMenu>
-                      <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="h-7 w-7 bg-transparent dark:bg-transparent text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full focus:ring-0 focus:outline-none shadow-none border-none" />}>
+                      <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="h-7 w-7 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-lg focus:ring-0 focus:outline-none shadow-none border-none" />}>
                         <MoreVertical size={14} />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-48 z-50 p-1.5 rounded-xl border-slate-200/80 dark:border-slate-800 shadow-lg">
@@ -385,35 +385,35 @@ export default function AdminRoomsPage() {
                 </div>
 
                 {/* Body */}
-                <div className="px-3 pb-2.5 sm:px-4 sm:pb-3 flex flex-col gap-2 sm:gap-2.5 flex-1">
+                <div className="px-3.5 pb-3 sm:px-4 sm:pb-3.5 flex flex-col gap-2.5 flex-1">
                   <div className="flex flex-wrap items-center gap-1.5">
                     {room.user ? (
-                      <div className="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/50 px-2.5 py-1 rounded-full border border-slate-200/60 dark:border-slate-700/50">
-                        <div className="h-5 w-5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center text-[9px] font-bold flex-shrink-0">
+                      <div className="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full border border-slate-200/80 dark:border-slate-700/80">
+                        <div className="h-4.5 w-4.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-[9px] font-bold flex-shrink-0">
                           {room.user.name?.charAt(0).toUpperCase()}
                         </div>
-                        <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[90px]">
+                        <span className="text-[11px] font-medium text-slate-700 dark:text-slate-200 truncate max-w-[90px]">
                           {room.user.name}
                         </span>
                       </div>
                     ) : (
-                      <div className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-200/60 dark:border-emerald-500/20">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-500/15 px-2.5 py-1 rounded-full border border-emerald-200/80 dark:border-emerald-500/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                         {language === 'np' ? 'खाली' : 'Vacant'}
                       </div>
                     )}
                     {room.enrollment_date && (
-                      <div className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded-full border border-slate-200/60 dark:border-slate-700/50">
-                        <Calendar size={10} className="text-slate-400" />
+                      <div className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded-full border border-slate-200/80 dark:border-slate-700/70">
+                        <Calendar size={10} className="text-slate-400 dark:text-slate-400" />
                         {formatDate(room.enrollment_date)}
                       </div>
                     )}
                   </div>
 
                   {/* Rent */}
-                  <div className="mt-auto pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t.rent || 'Room Rent'}</span>
-                    <span className="font-extrabold text-sm text-slate-900 dark:text-slate-100">
+                  <div className="mt-auto pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">{t.rent || 'Room Rent'}</span>
+                    <span className="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100">
                       {room.settings?.default_room_rent !== undefined
                         ? (formatMoney ? formatMoney(room.settings.default_room_rent) : `Rs ${room.settings.default_room_rent}`)
                         : '—'}
@@ -422,16 +422,16 @@ export default function AdminRoomsPage() {
                 </div>
 
                 {/* Footer Actions */}
-                <div className="border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50/50 dark:bg-slate-900/50 divide-x divide-slate-200/80 dark:divide-slate-800 rounded-b-2xl overflow-hidden mt-auto">
+                <div className="border-t border-slate-100 dark:border-slate-800 flex items-stretch h-10 bg-slate-50/60 dark:bg-slate-900/60 divide-x divide-slate-100 dark:divide-slate-800 rounded-b-2xl overflow-hidden mt-auto">
                   <button
                     onClick={e => { e.stopPropagation(); router.push(`/admin/rooms/${room.id}/bills/new`); }}
-                    className="flex-1 text-[11px] font-extrabold uppercase tracking-wider text-blue-700 dark:text-blue-300 bg-blue-50/70 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 active:bg-blue-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer select-none rounded-bl-2xl"
+                    className="flex-1 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-blue-950/40 active:bg-blue-100 dark:active:bg-blue-900/50 flex items-center justify-center gap-1.5 transition-colors cursor-pointer select-none rounded-bl-2xl"
                   >
                     <Receipt size={13} /> {t.generate_monthly_bill || 'Generate Bill'}
                   </button>
                   <button
                     onClick={e => { e.stopPropagation(); router.push(`/admin/rooms/${room.id}`); }}
-                    className="flex-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200 bg-slate-100/70 dark:bg-slate-800/70 hover:bg-slate-200 dark:hover:bg-slate-700/80 active:bg-slate-300 flex items-center justify-center gap-1.5 transition-colors cursor-pointer select-none rounded-br-2xl"
+                    className="flex-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/60 flex items-center justify-center gap-1.5 transition-colors cursor-pointer select-none rounded-br-2xl"
                   >
                     <Eye size={13} /> {t.view || 'View'}
                   </button>

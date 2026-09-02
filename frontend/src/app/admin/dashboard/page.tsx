@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/axios';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { DoorOpen, ReceiptText, Banknote, AlertCircle, CheckCircle2, Clock, CalendarDays, LayoutDashboard } from 'lucide-react';
+import { DoorOpen, ReceiptText, Banknote, AlertCircle, CheckCircle2, Clock, CalendarDays } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell, Legend, Label as RechartsLabel } from 'recharts';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useTheme } from 'next-themes';
 import { BS_MONTHS_EN, BS_MONTHS_NP, getTodayBsDate, parseBsDate } from '@/lib/bsDate';
@@ -14,10 +15,12 @@ import { BS_MONTHS_EN, BS_MONTHS_NP, getTodayBsDate, parseBsDate } from '@/lib/b
 export default function AdminDashboard() {
   const { t, formatMoney, formatNumber, language } = useLanguage();
   const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && resolvedTheme === 'dark';
 
   const bsToday = parseBsDate(getTodayBsDate()) || { year: 2081, month: 5 };
-  const currentMonthName = language === 'np' 
+  const currentMonthName = language === 'np'
     ? `${BS_MONTHS_NP[bsToday.month - 1]} ${formatNumber(bsToday.year)}`
     : `${BS_MONTHS_EN[bsToday.month - 1]} ${formatNumber(bsToday.year)}`;
 
@@ -78,24 +81,19 @@ export default function AdminDashboard() {
     <div className="p-3.5 sm:p-4 md:p-8 space-y-4 md:space-y-6 max-w-7xl mx-auto text-slate-900 dark:text-slate-100 pb-24">
       {/* ── TOP HEADER ── */}
       <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="h-8.5 w-8.5 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-            <LayoutDashboard size={18} />
-          </div>
-          <div>
-            <h1 className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">{t.dashboard}</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-[11px] sm:text-xs font-medium">
-              {language === 'np' ? 'तपाईंको भाडा र बिल सङ्कलनको सिंहावलोकन' : 'Overview of your rent and bill collections'}
-            </p>
-          </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t.dashboard}</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-xs font-medium mt-0.5">
+            {language === 'np' ? 'तपाईंको भाडा तथा बिल सङ्कलनको संक्षिप्त विवरण' : 'Overview of your rent and bill collections'}
+          </p>
         </div>
 
-        <Badge variant="outline" className="flex items-center gap-1.5 text-xs font-extrabold px-3 h-8.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl text-blue-600 dark:text-blue-400 border-slate-200/80 dark:border-slate-800/80 shadow-xs rounded-full shrink-0">
+        <Badge variant="outline" className="flex items-center gap-1.5 text-xs font-semibold px-3 h-8.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl text-blue-600 dark:text-blue-400 border-slate-200/80 dark:border-slate-800/80 shadow-xs rounded-full shrink-0">
           <CalendarDays size={13} className="text-blue-500 shrink-0" />
           <span>{currentMonthName}</span>
         </Badge>
       </div>
-      
+
       {/* ── TOP VIBRANT GLASS METRIC CARDS ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 md:gap-5">
         {/* Rooms */}
@@ -168,7 +166,7 @@ export default function AdminDashboard() {
         <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           {t.bills_status}
         </h2>
-        
+
         <div className="grid grid-cols-3 gap-2 sm:gap-3.5">
           {/* Paid */}
           <Card className="border border-emerald-200/80 dark:border-emerald-900/40 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden relative">
@@ -190,7 +188,7 @@ export default function AdminDashboard() {
               </div>
             </div>
           </Card>
-          
+
           {/* Partial */}
           <Card className="border border-amber-200/80 dark:border-amber-900/40 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden relative">
             <div className="absolute top-0 left-0 right-0 h-1 sm:h-1.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-400" />
@@ -261,8 +259,8 @@ export default function AdminDashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? '#334155' : '#e2e8f0'} opacity={0.5} />
                 <XAxis dataKey="name" stroke={isDark ? '#94a3b8' : '#64748b'} tick={{ fontSize: 9, fontWeight: 600, fill: isDark ? '#94a3b8' : '#64748b' }} tickMargin={6} axisLine={false} tickLine={false} />
                 <YAxis stroke={isDark ? '#94a3b8' : '#64748b'} width={35} tick={{ fontSize: 9, fill: isDark ? '#94a3b8' : '#64748b' }} axisLine={false} tickLine={false} />
-                <Tooltip 
-                  formatter={(value: any) => formatMoney(value)} 
+                <Tooltip
+                  formatter={(value: any) => formatMoney(value)}
                   contentStyle={tooltipStyle}
                   itemStyle={tooltipItemStyle}
                 />
@@ -305,13 +303,14 @@ export default function AdminDashboard() {
                     }}
                   />
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   contentStyle={tooltipStyle}
                   itemStyle={tooltipItemStyle}
                 />
-                <Legend 
-                  iconType="circle" 
+                <Legend
+                  iconType="circle"
                   wrapperStyle={{ paddingTop: '5px', fontSize: '10px', fontWeight: 600 }}
+                  formatter={(val) => <span style={{ color: isDark ? '#e2e8f0' : '#334155' }}>{val}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>

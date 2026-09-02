@@ -103,11 +103,11 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
       {/* Mobile Topbar */}
       <div className="md:hidden h-13 bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between px-3.5 shrink-0 z-30">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-sm flex-shrink-0">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-xs flex-shrink-0">
             {user?.name ? user.name.charAt(0).toUpperCase() : 'T'}
           </div>
           <div className="flex flex-col min-w-0">
-            <div className="font-black text-sm sm:text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)] truncate">
+            <div className="font-bold text-sm sm:text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)] truncate">
               {t.tenant_portal}
             </div>
             {user && (
@@ -121,7 +121,7 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
           <ThemeToggle />
           <button
             onClick={() => setLanguage(language === 'np' ? 'en' : 'np')}
-            className="flex items-center gap-1 text-[11px] font-bold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-full border border-slate-200/60 dark:border-slate-700/60 active:scale-95 transition-transform"
+            className="flex items-center gap-1 text-[11px] font-semibold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-full border border-slate-200/60 dark:border-slate-700/60 active:scale-95 transition-transform"
           >
             <Globe size={12} /> {language === 'np' ? 'नेपाली' : 'EN'}
           </button>
@@ -149,10 +149,10 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
                  isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                }`}
              >
-               <div className={`px-3 py-1 rounded-full transition-all ${isActive ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/25' : ''}`}>
+               <div className={`px-3 py-1 rounded-full transition-all ${isActive ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xs shadow-emerald-500/25' : ''}`}>
                  <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />
                </div>
-               <span className={`text-[9px] ${isActive ? 'font-bold text-emerald-600 dark:text-emerald-400' : 'font-medium'}`}>{item.name}</span>
+               <span className={`text-[10px] ${isActive ? 'font-semibold text-emerald-600 dark:text-emerald-400' : 'font-medium'}`}>{item.name}</span>
              </Link>
           )
         })}

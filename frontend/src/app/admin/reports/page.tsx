@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
-import { Printer, TrendingUp, AlertCircle, CheckCircle2, DoorOpen, Calendar, FileText, ChevronRight } from 'lucide-react';
+import { Printer, TrendingUp, AlertCircle, CheckCircle2, DoorOpen, Calendar, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { BS_MONTHS_EN, BS_MONTHS_NP, getTodayBsDate, parseBsDate } from '@/lib/bsDate';
 
@@ -31,19 +31,19 @@ export default function AdminReportsPage() {
     switch (status) {
       case 'PAID':
         return (
-          <span className="inline-flex items-center text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 tracking-wider">
+          <span className="inline-flex items-center text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 tracking-wider">
             {t.paid}
           </span>
         );
       case 'PARTIALLY_PAID':
         return (
-          <span className="inline-flex items-center text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60 tracking-wider">
+          <span className="inline-flex items-center text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60 tracking-wider">
             {t.partial}
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border border-red-200/80 dark:border-red-800/60 tracking-wider">
+          <span className="inline-flex items-center text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border border-red-200/80 dark:border-red-800/60 tracking-wider">
             {t.unpaid}
           </span>
         );
@@ -57,30 +57,25 @@ export default function AdminReportsPage() {
       {/* ── TOP HEADER & GLASS CONTROLS BAR ── */}
       <div className="flex flex-col gap-3 print:hidden">
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-              <FileText size={18} />
-            </div>
-            <div>
-              <h1 className="text-lg sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
-                {t.collection_report}
-              </h1>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                {language === 'np' ? `वर्ष ${formatNumber(year)} को ${monthName} महिनाको विवरण` : `Monthly summary for ${monthName} ${formatNumber(year)} BS`}
-              </p>
-            </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
+              {t.collection_report}
+            </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              {language === 'np' ? `वर्ष ${formatNumber(year)} को ${monthName} महिनाको विवरण` : `Monthly summary for ${monthName} ${formatNumber(year)} BS`}
+            </p>
           </div>
         </div>
 
         {/* ── SEGMENTED GLASS PILL BAR (PICTURE 2 STYLE) ── */}
-        <div className="flex items-center divide-x divide-slate-200/80 dark:divide-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 rounded-full h-10 shadow-sm overflow-hidden select-none">
+        <div className="flex items-center divide-x divide-slate-200/80 dark:divide-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 rounded-full h-10 shadow-xs overflow-hidden select-none">
           {/* Year Segment */}
           <div className="flex-1 h-full min-w-0 flex items-center">
             <Select value={year} onValueChange={(v: any) => setYear(v)}>
-              <SelectTrigger className="w-full h-full border-0 bg-transparent hover:bg-slate-100/60 dark:hover:bg-slate-800/60 text-xs font-bold rounded-none px-2 sm:px-3.5 flex items-center justify-between gap-1 cursor-pointer transition-colors outline-none shadow-none focus:ring-0">
-                <div className="flex items-center gap-1 min-w-0">
+              <SelectTrigger className="w-full h-full border-0 bg-transparent hover:bg-slate-100/60 dark:hover:bg-slate-800/60 text-xs font-semibold rounded-none px-2 sm:px-3.5 flex items-center justify-between gap-1 cursor-pointer transition-colors outline-none shadow-none focus:ring-0">
+                <div className="flex items-center gap-1.5 min-w-0">
                   <Calendar size={13} className="text-blue-500 shrink-0" />
-                  <span className="font-extrabold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap">{formatNumber(year)}</span>
+                  <span className="font-semibold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap">{formatNumber(year)}</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -94,10 +89,10 @@ export default function AdminReportsPage() {
           {/* Month Segment */}
           <div className="flex-1 h-full min-w-0 flex items-center">
             <Select value={month} onValueChange={(v: any) => setMonth(v)}>
-              <SelectTrigger className="w-full h-full border-0 bg-transparent hover:bg-slate-100/60 dark:hover:bg-slate-800/60 text-xs font-bold rounded-none px-2 sm:px-3.5 flex items-center justify-between gap-1 cursor-pointer transition-colors outline-none shadow-none focus:ring-0">
-                <div className="flex items-center gap-1 min-w-0">
+              <SelectTrigger className="w-full h-full border-0 bg-transparent hover:bg-slate-100/60 dark:hover:bg-slate-800/60 text-xs font-semibold rounded-none px-2 sm:px-3.5 flex items-center justify-between gap-1 cursor-pointer transition-colors outline-none shadow-none focus:ring-0">
+                <div className="flex items-center gap-1.5 min-w-0">
                   <Calendar size={13} className="text-blue-500 shrink-0" />
-                  <span className="font-extrabold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap">{monthName}</span>
+                  <span className="font-semibold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap">{monthName}</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -114,7 +109,7 @@ export default function AdminReportsPage() {
           <button
             type="button"
             onClick={() => window.print()}
-            className="flex-1 h-full bg-transparent hover:bg-blue-50/70 dark:hover:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-extrabold text-xs px-2 sm:px-3.5 flex items-center justify-center gap-1.5 cursor-pointer transition-colors outline-none active:scale-95 shrink-0"
+            className="flex-1 h-full bg-transparent hover:bg-blue-50/70 dark:hover:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold text-xs px-2 sm:px-3.5 flex items-center justify-center gap-1.5 cursor-pointer transition-colors outline-none active:scale-[0.98] shrink-0"
           >
             <Printer size={14} className="text-blue-500 shrink-0" />
             <span className="whitespace-nowrap">{t.print}</span>
@@ -142,39 +137,39 @@ export default function AdminReportsPage() {
           {/* ── 3-STAT VIBRANT KPI CARDS ── */}
           <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {/* Expected Collection */}
-            <Card className="border border-blue-200/80 dark:border-blue-800/60 shadow-sm bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-blue-950/40 dark:via-slate-900 dark:to-blue-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
+            <Card className="border border-blue-200/80 dark:border-blue-800/60 shadow-xs bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-blue-950/40 dark:via-slate-900 dark:to-blue-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
               <CardContent className="p-0 flex flex-col justify-between h-full">
                 <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 truncate">{t.expected_collection}</span>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 truncate">{t.expected_collection}</span>
                   <TrendingUp size={14} className="text-blue-500 shrink-0 hidden sm:block" />
                 </div>
-                <div className="text-xs sm:text-xl font-extrabold text-slate-900 dark:text-slate-100 mt-1 truncate">
+                <div className="text-xs sm:text-lg font-bold text-slate-900 dark:text-slate-100 mt-1 truncate">
                   {formatMoney(report?.summary.totalExpected || 0)}
                 </div>
               </CardContent>
             </Card>
 
             {/* Total Outstanding */}
-            <Card className="border border-red-200/80 dark:border-red-800/60 shadow-sm bg-gradient-to-br from-red-50/80 via-white to-red-50/30 dark:from-red-950/40 dark:via-slate-900 dark:to-red-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
+            <Card className="border border-red-200/80 dark:border-red-800/60 shadow-xs bg-gradient-to-br from-red-50/80 via-white to-red-50/30 dark:from-red-950/40 dark:via-slate-900 dark:to-red-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
               <CardContent className="p-0 flex flex-col justify-between h-full">
                 <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 truncate">{t.total_outstanding}</span>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-red-600 dark:text-red-400 truncate">{t.total_outstanding}</span>
                   <AlertCircle size={14} className="text-red-500 shrink-0 hidden sm:block" />
                 </div>
-                <div className="text-xs sm:text-xl font-extrabold text-red-600 dark:text-red-400 mt-1 truncate">
+                <div className="text-xs sm:text-lg font-bold text-red-600 dark:text-red-400 mt-1 truncate">
                   {formatMoney(report?.summary.totalOutstanding || 0)}
                 </div>
               </CardContent>
             </Card>
 
             {/* Total Collected */}
-            <Card className="border border-emerald-200/80 dark:border-emerald-800/60 shadow-sm bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/30 dark:from-emerald-950/40 dark:via-slate-900 dark:to-emerald-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
+            <Card className="border border-emerald-200/80 dark:border-emerald-800/60 shadow-xs bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/30 dark:from-emerald-950/40 dark:via-slate-900 dark:to-emerald-950/20 backdrop-blur-md rounded-2xl overflow-hidden p-2.5 sm:p-4">
               <CardContent className="p-0 flex flex-col justify-between h-full">
                 <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 truncate">{t.total_collected}</span>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 truncate">{t.total_collected}</span>
                   <CheckCircle2 size={14} className="text-emerald-500 shrink-0 hidden sm:block" />
                 </div>
-                <div className="text-xs sm:text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1 truncate">
+                <div className="text-xs sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1 truncate">
                   {formatMoney(report?.summary.totalCollected || 0)}
                 </div>
               </CardContent>
@@ -182,15 +177,15 @@ export default function AdminReportsPage() {
           </div>
 
           {/* ── DESKTOP REPORTS TABLE ── */}
-          <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden print:shadow-none">
+          <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden print:shadow-none">
             <Table>
               <TableHeader className="bg-slate-50/80 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800">
                 <TableRow>
-                  <TableHead className="text-center font-extrabold text-xs text-slate-700 dark:text-slate-200">{t.room_name}</TableHead>
-                  <TableHead className="text-center font-extrabold text-xs text-slate-700 dark:text-slate-200">{t.grand_total}</TableHead>
-                  <TableHead className="text-center font-extrabold text-xs text-emerald-600 dark:text-emerald-400">{t.amount_paid}</TableHead>
-                  <TableHead className="text-center font-extrabold text-xs text-red-600 dark:text-red-400">{t.remaining_balance}</TableHead>
-                  <TableHead className="text-center font-extrabold text-xs text-slate-700 dark:text-slate-200">{t.status}</TableHead>
+                  <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.room_name}</TableHead>
+                  <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.grand_total}</TableHead>
+                  <TableHead className="text-center font-semibold text-xs text-emerald-600 dark:text-emerald-400">{t.amount_paid}</TableHead>
+                  <TableHead className="text-center font-semibold text-xs text-red-600 dark:text-red-400">{t.remaining_balance}</TableHead>
+                  <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.status}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -203,7 +198,7 @@ export default function AdminReportsPage() {
                 ) : (
                   report?.bills?.map((bill: any, index: number) => (
                     <TableRow key={index} className="text-center hover:bg-slate-50/70 dark:hover:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800/60">
-                      <TableCell className="text-center font-bold text-xs text-slate-900 dark:text-slate-100">
+                      <TableCell className="text-center font-semibold text-xs text-slate-900 dark:text-slate-100">
                         <Link 
                           href={`/admin/rooms/${bill.room_id}`}
                           className="inline-flex items-center justify-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
@@ -213,9 +208,9 @@ export default function AdminReportsPage() {
                           <ChevronRight size={12} className="text-slate-400 opacity-60 group-hover:translate-x-0.5 transition-transform" />
                         </Link>
                       </TableCell>
-                      <TableCell className="text-center font-bold text-xs text-slate-800 dark:text-slate-200">{formatMoney(bill.bill_total)}</TableCell>
-                      <TableCell className="text-center text-emerald-600 dark:text-emerald-400 font-bold text-xs">{formatMoney(bill.paid)}</TableCell>
-                      <TableCell className="text-center text-red-600 dark:text-red-400 font-extrabold text-xs">{formatMoney(bill.remaining)}</TableCell>
+                      <TableCell className="text-center font-medium text-xs text-slate-800 dark:text-slate-200">{formatMoney(bill.bill_total)}</TableCell>
+                      <TableCell className="text-center text-emerald-600 dark:text-emerald-400 font-medium text-xs">{formatMoney(bill.paid)}</TableCell>
+                      <TableCell className="text-center text-red-600 dark:text-red-400 font-semibold text-xs">{formatMoney(bill.remaining)}</TableCell>
                       <TableCell className="text-center">{getStatusBadge(bill.status)}</TableCell>
                     </TableRow>
                   ))

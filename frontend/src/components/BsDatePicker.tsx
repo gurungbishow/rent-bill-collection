@@ -60,7 +60,7 @@ export function BsDatePicker({ value, onChange, language = 'en' }: BsDatePickerP
   return (
     <div className="flex gap-2 w-full">
       <Select value={year.toString()} onValueChange={(val) => updateDate(Number(val), month, day)}>
-        <SelectTrigger className="flex-1 h-8 text-xs font-semibold text-slate-800 dark:text-slate-200">
+        <SelectTrigger className="flex-1 h-9 text-xs font-medium text-slate-800 dark:text-slate-200">
           <SelectValue placeholder="Year" />
         </SelectTrigger>
         <SelectContent className="max-h-[200px]">
@@ -71,7 +71,7 @@ export function BsDatePicker({ value, onChange, language = 'en' }: BsDatePickerP
       </Select>
 
       <Select value={month.toString()} onValueChange={(val) => updateDate(year, Number(val), day)}>
-        <SelectTrigger className="flex-[1.2] h-8 text-xs font-semibold text-slate-800 dark:text-slate-200">
+        <SelectTrigger className="flex-[1.2] h-9 text-xs font-medium text-slate-800 dark:text-slate-200">
           <SelectValue placeholder="Month" />
         </SelectTrigger>
         <SelectContent className="max-h-[200px]">
@@ -82,7 +82,7 @@ export function BsDatePicker({ value, onChange, language = 'en' }: BsDatePickerP
       </Select>
 
       <Select value={day.toString()} onValueChange={(val) => updateDate(year, month, Number(val))}>
-        <SelectTrigger className="flex-1 h-8 text-xs font-semibold text-slate-800 dark:text-slate-200">
+        <SelectTrigger className="flex-1 h-9 text-xs font-medium text-slate-800 dark:text-slate-200">
           <SelectValue placeholder="Day" />
         </SelectTrigger>
         <SelectContent className="max-h-[200px]">

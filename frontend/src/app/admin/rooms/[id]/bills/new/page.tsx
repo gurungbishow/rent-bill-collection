@@ -324,7 +324,7 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
               <AlertTriangle size={18} />
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-200">
+              <p className="text-xs sm:text-sm font-semibold text-amber-900 dark:text-amber-200">
                 {language === 'np' ? 'प्रवेश मिति (Move-in Date) तोकिएको छैन' : 'Move-in Date Not Set'}
               </p>
               <p className="text-[11px] sm:text-xs text-amber-700 dark:text-amber-400 mt-0.5">
@@ -346,7 +346,7 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
               });
               setIsEditRoomOpen(true);
             }} 
-            className="text-xs font-bold bg-white dark:bg-slate-900 border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50 shrink-0 rounded-full"
+            className="text-xs font-semibold bg-white dark:bg-slate-900 border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50 shrink-0 rounded-xl"
           >
             {language === 'np' ? 'मिति राख्नुहोस्' : 'Set Move-in Date'}
           </Button>
@@ -361,13 +361,13 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
             {/* Unified Billing Card */}
             <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white dark:bg-slate-900 rounded-2xl overflow-hidden">
               <CardHeader className="p-3 pb-2.5 border-b border-slate-100 dark:border-slate-800/80 flex flex-row items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-800/20">
-                <CardTitle className="text-xs sm:text-sm font-bold flex items-center gap-1.5 text-slate-900 dark:text-slate-100 flex-shrink-0">
+                <CardTitle className="text-xs sm:text-sm font-semibold flex items-center gap-1.5 text-slate-900 dark:text-slate-100 flex-shrink-0">
                   <div className="h-6 w-6 rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                     <Calendar size={13} />
                   </div>
                   <span>{t.generate_monthly_bill || 'Monthly Bill'}</span>
                 </CardTitle>
-                <span className={`text-[9px] sm:text-xs font-bold px-2.5 py-1 rounded-full border truncate ${
+                <span className={`text-[9px] sm:text-xs font-semibold px-2.5 py-1 rounded-full border truncate ${
                   isMoveInDateMissing 
                     ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-400 dark:border-amber-800' 
                     : 'bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20'
@@ -386,8 +386,8 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
               </CardHeader>
               <CardContent className="p-3 space-y-3">
                 {/* 1. Date Section */}
-                <div className="space-y-1 max-w-sm">
-                  <Label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                <div className="space-y-1.5 max-w-sm">
+                  <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                     <Calendar size={12} className="text-slate-400" />
                     {t.date || 'Bill Date'}
                   </Label>
@@ -404,7 +404,7 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
                       <p className="text-xs text-amber-700 dark:text-amber-300 flex items-center gap-1 font-medium">
                         <AlertTriangle size={12} className="flex-shrink-0" />
                         {language === 'np'
-                          ? `मिति ${formatBsDate(minDate, language)} भन्दा पछि हुनुपर्छ`
+                           ? `मिति ${formatBsDate(minDate, language)} भन्दा पछि हुनुपर्छ`
                           : `Date must be after ${formatBsDate(minDate, language)}`}
                       </p>
                     </div>
@@ -414,7 +414,7 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
                 {/* 2. Electricity Section */}
                 <div className="border-t border-slate-100 dark:border-slate-800/80 pt-2.5 space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
                       <Zap size={12} className="text-amber-500" />
                       {t.electricity || 'Electricity Reading'}
                     </span>
@@ -429,11 +429,11 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
                     </label>
                   </div>
                   <div className="grid grid-cols-2 gap-2 md:gap-3">
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <Label className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">{t.prev_unit || 'Previous'}</Label>
+                        <Label className="text-xs font-medium text-slate-600 dark:text-slate-300">{t.prev_unit || 'Previous'}</Label>
                         {isMeterReset && (
-                          <span className="text-[9px] font-extrabold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 rounded border border-blue-200/80 dark:border-blue-800/60">
+                          <span className="text-[9px] sm:text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 rounded border border-blue-200/80 dark:border-blue-800/60">
                             {language === 'np' ? 'सुरुवाती रिडिङ' : 'Starting Unit'}
                           </span>
                         )}
@@ -441,12 +441,12 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
                       <Input 
                         type="number" 
                         readOnly 
-                        className={`h-8 text-xs font-semibold rounded-md ${isMeterReset ? "bg-blue-50/50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-800" : "bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 cursor-not-allowed"}`} 
+                        className={`h-9 text-xs font-medium rounded-lg ${isMeterReset ? "bg-blue-50/50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-800" : "bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 cursor-not-allowed"}`} 
                         {...register('prev_electric_unit')} 
                       />
                     </div>
-                    <div className="space-y-1">
-                      <Label className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{t.pres_unit || 'Current'}</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-medium text-slate-600 dark:text-slate-300">{t.pres_unit || 'Current'}</Label>
                       <Input 
                         type="number" 
                         placeholder="0"
@@ -627,7 +627,7 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
               <button
                 type="submit"
                 form="bill-form"
-                className="w-full h-11 text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-none select-none rounded-b-2xl"
+                className="w-full h-11 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-none select-none rounded-b-2xl"
                 disabled={isSubmitting || (Number(formValues.pres_electric_unit) < Number(formValues.prev_electric_unit)) || isMoveInDateMissing || isDateInvalid}
               >
                 {isSubmitting ? t.loading : (language === 'np' ? 'बिल जारी गर्नुहोस्' : 'Generate & Save Bill')}
@@ -816,10 +816,10 @@ export default function NewBillPage({ params }: { params: Promise<{ id: string }
           </div>
           
           {/* Edge-to-Edge 50/50 Split Action Bar */}
-          <div className="border-t border-slate-200/80 flex items-stretch h-11 bg-slate-50 divide-x divide-slate-200/80 rounded-b-2xl overflow-hidden">
+          <div className="border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50 dark:bg-slate-900 divide-x divide-slate-200/80 dark:divide-slate-800 rounded-b-2xl overflow-hidden">
             <button 
               type="button"
-              className="flex-1 font-extrabold text-xs text-slate-700 bg-white hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl" 
+              className="flex-1 font-extrabold text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer select-none rounded-bl-2xl" 
               onClick={async () => {
                 if (!receiptRef.current) return;
                 try {

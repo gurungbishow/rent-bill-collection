@@ -213,19 +213,19 @@ export default function AdminUsersPage() {
             </DialogHeader>
             <div className="grid gap-3.5 p-4 md:p-5 pt-2">
               <div className="grid grid-cols-4 items-center gap-3">
-                <Label className="text-right text-xs font-semibold">{t.name}</Label>
+                <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.name}</Label>
                 <Input className="col-span-3 h-9 text-xs rounded-lg" placeholder="e.g. John Doe" value={createForm.name} onChange={e => setCreateForm({...createForm, name: e.target.value})} />
               </div>
               <div className="grid grid-cols-4 items-center gap-3">
-                <Label className="text-right text-xs font-semibold">{t.email}</Label>
+                <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.email}</Label>
                 <Input type="email" className="col-span-3 h-9 text-xs rounded-lg" placeholder="e.g. john@example.com" value={createForm.email} onChange={e => setCreateForm({...createForm, email: e.target.value})} />
               </div>
               <div className="grid grid-cols-4 items-center gap-3">
-                <Label className="text-right text-xs font-semibold">{t.password}</Label>
+                <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.password}</Label>
                 <Input type="password" className="col-span-3 h-9 text-xs rounded-lg" placeholder="••••••••" value={createForm.password} onChange={e => setCreateForm({...createForm, password: e.target.value})} />
               </div>
               <div className="grid grid-cols-4 items-center gap-3">
-                <Label className="text-right text-xs font-semibold">{t.role}</Label>
+                <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.role}</Label>
                 <div className="col-span-3">
                   <Select value={createForm.role} onValueChange={(v: any) => setCreateForm({...createForm, role: v})}>
                     <SelectTrigger className="w-full h-9 text-xs rounded-lg">
@@ -242,7 +242,7 @@ export default function AdminUsersPage() {
               </div>
               {createForm.role === 'ROOM_USER' && (
                 <div className="grid grid-cols-4 items-center gap-3">
-                  <Label className="text-right text-xs font-semibold">{t.room_name}</Label>
+                  <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.room_name}</Label>
                   <div className="col-span-3">
                     <Select value={createForm.room_id} onValueChange={(v: any) => setCreateForm({...createForm, room_id: v})}>
                       <SelectTrigger className="w-full h-9 text-xs rounded-lg">
@@ -262,7 +262,7 @@ export default function AdminUsersPage() {
             </div>
             <DialogFooter>
               <Button type="button" variant="ghost" onClick={() => setIsCreateOpen(false)} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">{t.cancel}</Button>
-              <Button type="button" onClick={() => createMutation.mutate(createForm)} disabled={createMutation.isPending || !createForm.name || !createForm.email || !createForm.password || (createForm.role === 'ROOM_USER' && !createForm.room_id)} className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold cursor-pointer">
+              <Button type="button" onClick={() => createMutation.mutate(createForm)} disabled={createMutation.isPending || !createForm.name || !createForm.email || !createForm.password || (createForm.role === 'ROOM_USER' && !createForm.room_id)} className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold cursor-pointer">
                 {createMutation.isPending ? t.loading : t.add_new_user}
               </Button>
             </DialogFooter>
@@ -271,16 +271,16 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Users Table */}
-      <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-sm bg-white/80 dark:bg-slate-900/80 backdrop-blur-md overflow-hidden rounded-2xl">
+      <Card className="hidden md:block border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md overflow-hidden rounded-2xl">
         <Table>
           <TableHeader className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
             <TableRow>
-              <TableHead className="text-left font-bold text-slate-700 dark:text-slate-200 pl-6">{t.name}</TableHead>
-              <TableHead className="text-center font-bold text-slate-700 dark:text-slate-200">{t.email}</TableHead>
-              <TableHead className="text-center font-bold text-slate-700 dark:text-slate-200">{t.role}</TableHead>
-              <TableHead className="text-center font-bold text-slate-700 dark:text-slate-200">{t.room_name}</TableHead>
-              <TableHead className="text-center font-bold text-slate-700 dark:text-slate-200">{t.status}</TableHead>
-              <TableHead className="text-center font-bold text-slate-700 dark:text-slate-200 pr-6">{t.actions}</TableHead>
+              <TableHead className="text-left font-semibold text-xs text-slate-700 dark:text-slate-200 pl-6">{t.name}</TableHead>
+              <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.email}</TableHead>
+              <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.role}</TableHead>
+              <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.room_name}</TableHead>
+              <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200">{t.status}</TableHead>
+              <TableHead className="text-center font-semibold text-xs text-slate-700 dark:text-slate-200 pr-6">{t.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -288,7 +288,7 @@ export default function AdminUsersPage() {
               <TableRow key={user.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800/60">
                 <TableCell className="pl-6 font-semibold text-slate-900 dark:text-slate-100">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold text-xs flex items-center justify-center shadow-xs shrink-0">
                       {getInitials(user.name)}
                     </div>
                     <span>{user.name}</span>
@@ -297,12 +297,12 @@ export default function AdminUsersPage() {
                 <TableCell className="text-center text-slate-600 dark:text-slate-400 text-xs">{user.email}</TableCell>
                 <TableCell className="text-center">
                   {user.role === 'ADMIN' ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60">
+                    <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60">
                       <ShieldCheck size={11} className="text-indigo-500 shrink-0" />
                       <span>{t.system_admin}</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
+                    <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
                       <Home size={11} className="text-emerald-500 shrink-0" />
                       <span>{t.room_tenant}</span>
                     </span>
@@ -310,7 +310,7 @@ export default function AdminUsersPage() {
                 </TableCell>
                 <TableCell className="text-center">
                   {user.room ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/60">
+                    <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/60">
                       <DoorOpen size={11} className="text-blue-500 shrink-0" />
                       <span>{user.room.room_name}</span>
                     </span>
@@ -458,15 +458,15 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="grid gap-3.5 p-4 md:p-5 pt-2">
             <div className="grid grid-cols-4 items-center gap-3">
-              <Label className="text-right text-xs font-semibold">{t.name}</Label>
+              <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.name}</Label>
               <Input className="col-span-3 h-9 text-xs rounded-lg" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} />
             </div>
             <div className="grid grid-cols-4 items-center gap-3">
-              <Label className="text-right text-xs font-semibold">{t.email}</Label>
+              <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.email}</Label>
               <Input type="email" className="col-span-3 h-9 text-xs rounded-lg" value={editForm.email} onChange={e => setEditForm({...editForm, email: e.target.value})} />
             </div>
             <div className="grid grid-cols-4 items-center gap-3">
-              <Label className="text-right text-xs font-semibold">{t.role}</Label>
+              <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.role}</Label>
               <div className="col-span-3">
                 <Select value={editForm.role} onValueChange={(v: any) => setEditForm({...editForm, role: v})}>
                   <SelectTrigger className="w-full h-9 text-xs rounded-lg">
@@ -483,7 +483,7 @@ export default function AdminUsersPage() {
             </div>
             {editForm.role === 'ROOM_USER' && (
               <div className="grid grid-cols-4 items-center gap-3">
-                <Label className="text-right text-xs font-semibold">{t.room_name}</Label>
+                <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.room_name}</Label>
                 <div className="col-span-3">
                   <Select value={editForm.room_id} onValueChange={(v: any) => setEditForm({...editForm, room_id: v})}>
                     <SelectTrigger className="w-full h-9 text-xs rounded-lg">
@@ -501,7 +501,7 @@ export default function AdminUsersPage() {
               </div>
             )}
             <div className="grid grid-cols-4 items-center gap-3">
-              <Label className="text-right text-xs font-semibold">{t.status}</Label>
+              <Label className="text-right text-xs font-medium text-slate-700 dark:text-slate-300">{t.status}</Label>
               <div className="col-span-3 flex items-center gap-2">
                 <Switch 
                   checked={editForm.is_active} 
@@ -515,7 +515,7 @@ export default function AdminUsersPage() {
           </div>
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">{t.cancel}</Button>
-            <Button type="button" onClick={() => updateMutation.mutate(editForm)} disabled={updateMutation.isPending || !editForm.name || !editForm.email} className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold cursor-pointer">
+            <Button type="button" onClick={() => updateMutation.mutate(editForm)} disabled={updateMutation.isPending || !editForm.name || !editForm.email} className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold cursor-pointer">
               {updateMutation.isPending ? t.loading : t.save}
             </Button>
           </DialogFooter>
@@ -534,10 +534,10 @@ export default function AdminUsersPage() {
           <div className="space-y-3.5 p-4 md:p-5 pt-2 text-sm">
             <p className="text-xs text-slate-600 dark:text-slate-400">
               {t.resetting_password_for}{' '}
-              <strong className="text-slate-900 dark:text-slate-100 font-bold">{resettingUser?.name} ({resettingUser?.email})</strong>
+              <strong className="text-slate-900 dark:text-slate-100 font-semibold">{resettingUser?.name} ({resettingUser?.email})</strong>
             </p>
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">{t.new_password}</Label>
+              <Label className="text-xs font-medium text-slate-700 dark:text-slate-300">{t.new_password}</Label>
               <Input 
                 type="password"
                 placeholder="••••••••"
@@ -559,7 +559,7 @@ export default function AdminUsersPage() {
                 resetPasswordMutation.mutate({ id: resettingUser?.id, newPassword });
               }}
               disabled={resetPasswordMutation.isPending || !newPassword}
-              className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold cursor-pointer"
+              className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold cursor-pointer"
             >
               {resetPasswordMutation.isPending ? t.loading : t.reset_user_password}
             </Button>
@@ -578,7 +578,7 @@ export default function AdminUsersPage() {
           <div className="p-4 space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             <p>
               {t.delete_user_confirm}{' '}
-              <strong className="text-slate-900 dark:text-slate-100 font-bold">{deletingUser?.name} ({deletingUser?.email})</strong>
+              <strong className="text-slate-900 dark:text-slate-100 font-semibold">{deletingUser?.name} ({deletingUser?.email})</strong>
               ?
             </p>
             <p className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 p-2.5 rounded-lg border border-red-100 dark:border-red-900/40 font-medium">
@@ -591,7 +591,7 @@ export default function AdminUsersPage() {
               type="button"
               onClick={() => deleteMutation.mutate(deletingUser?.id)}
               disabled={deleteMutation.isPending}
-              className="bg-gradient-to-r from-red-600 via-rose-500 to-red-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold cursor-pointer"
+              className="bg-gradient-to-r from-red-600 via-rose-500 to-red-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold cursor-pointer"
             >
               {deleteMutation.isPending ? t.loading : t.delete}
             </Button>

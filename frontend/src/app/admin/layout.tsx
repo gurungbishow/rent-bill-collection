@@ -41,11 +41,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Desktop Sidebar (Glassmorphism) */}
       <div className="hidden md:flex w-64 flex-col bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/50 relative z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] dark:shadow-[4px_0_24px_rgba(0,0,0,0.2)]">
         <div className="flex flex-col justify-center h-16 px-6 border-b border-slate-200/50 dark:border-slate-800/50">
-          <div className="font-black text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
+          <div className="font-bold text-lg sm:text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
             {language === 'np' ? 'घरधनी पोर्टल' : 'Admin Portal'}
           </div>
           {user && (
-            <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 truncate mt-0.5">
+            <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate mt-0.5">
               {user.name || user.username}
             </div>
           )}
@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <button
               onClick={() => setLanguage('np')}
               className={`px-2.5 py-1 rounded-md transition-all font-medium ${
-                language === 'np' ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                language === 'np' ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               नेपाली
@@ -66,7 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <button
               onClick={() => setLanguage('en')}
               className={`px-2.5 py-1 rounded-md transition-all font-medium ${
-                language === 'en' ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                language === 'en' ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               EN
@@ -84,8 +84,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 replace
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                   isActive 
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md shadow-blue-500/20' 
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 hover:shadow-sm'
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-xs shadow-blue-500/20' 
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 hover:shadow-xs'
                 }`}
               >
                 <item.icon size={20} className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-blue-500 transition-colors'} strokeWidth={isActive ? 2.5 : 2} />
@@ -109,11 +109,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Topbar */}
       <div className="md:hidden h-13 bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between px-3.5 shrink-0 z-30">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-sm flex-shrink-0">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs flex-shrink-0">
             {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
           </div>
           <div className="flex flex-col min-w-0">
-            <div className="font-black text-sm sm:text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)] truncate">
+            <div className="font-bold text-sm sm:text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)] truncate">
               {language === 'np' ? 'घरधनी पोर्टल' : 'Admin Portal'}
             </div>
             {user && (
@@ -127,7 +127,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <ThemeToggle />
           <button
             onClick={() => setLanguage(language === 'np' ? 'en' : 'np')}
-            className="flex items-center gap-1 text-[11px] font-bold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-full border border-slate-200/60 dark:border-slate-700/60 active:scale-95 transition-transform"
+            className="flex items-center gap-1 text-[11px] font-semibold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-full border border-slate-200/60 dark:border-slate-700/60 active:scale-95 transition-transform"
           >
             <Globe size={12} /> {language === 'np' ? 'नेपाली' : 'EN'}
           </button>
@@ -155,10 +155,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                  isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                }`}
              >
-               <div className={`px-3 py-1 rounded-full transition-all ${isActive ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25' : ''}`}>
+               <div className={`px-3 py-1 rounded-full transition-all ${isActive ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xs shadow-blue-500/25' : ''}`}>
                  <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />
                </div>
-               <span className={`text-[9px] ${isActive ? 'font-bold text-blue-600 dark:text-blue-400' : 'font-medium'}`}>{item.name}</span>
+               <span className={`text-[10px] ${isActive ? 'font-semibold text-blue-600 dark:text-blue-400' : 'font-medium'}`}>{item.name}</span>
              </Link>
           )
         })}

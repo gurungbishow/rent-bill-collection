@@ -117,7 +117,7 @@ export default function TenantProfilePage() {
           {initials}
         </div>
         <div className="flex flex-col min-w-0 z-10">
-          <h1 className="text-lg sm:text-2xl font-black text-white leading-tight truncate">
+          <h1 className="text-xl sm:text-2xl font-bold text-white leading-tight truncate">
             {profile?.name || user?.name}
           </h1>
           <p className="text-emerald-100/90 text-xs font-medium flex items-center gap-1 mt-0.5 truncate">
@@ -125,7 +125,7 @@ export default function TenantProfilePage() {
             <span className="truncate">{profile?.email || user?.email}</span>
           </p>
           <div className="mt-2">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
+            <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
               <DoorOpen size={11} className="shrink-0 text-emerald-200" />
               <span>{effectiveRoom?.room_name || (language === 'np' ? 'तोकिएको छैन' : 'Unassigned')}</span>
             </span>
@@ -136,7 +136,7 @@ export default function TenantProfilePage() {
       {/* ── PERSONAL INFORMATION CARD ── */}
       <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden">
         <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/60 p-3.5 sm:p-4">
-          <CardTitle className="text-xs sm:text-sm font-extrabold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+          <CardTitle className="text-xs sm:text-sm font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
             <div className="p-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
               <UserIcon size={14} />
             </div>
@@ -153,7 +153,7 @@ export default function TenantProfilePage() {
               </div>
               {t.name}
             </span>
-            <span className="font-extrabold text-slate-900 dark:text-slate-100">{profile?.name || user?.name}</span>
+            <span className="font-semibold text-slate-900 dark:text-slate-100">{profile?.name || user?.name}</span>
           </div>
 
           {/* Email */}
@@ -164,7 +164,7 @@ export default function TenantProfilePage() {
               </div>
               {t.email}
             </span>
-            <span className="font-bold text-slate-700 dark:text-slate-300 truncate max-w-[160px] sm:max-w-none">{profile?.email || user?.email}</span>
+            <span className="font-medium text-slate-700 dark:text-slate-300 truncate max-w-[160px] sm:max-w-none">{profile?.email || user?.email}</span>
           </div>
 
           {/* Assigned Room */}
@@ -175,7 +175,7 @@ export default function TenantProfilePage() {
               </div>
               {t.assigned_room}
             </span>
-            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
+            <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
               <DoorOpen size={10} className="text-emerald-500 shrink-0" />
               <span>{effectiveRoom?.room_name || (language === 'np' ? 'तोकिएको छैन' : 'Unassigned')}</span>
             </span>
@@ -190,7 +190,7 @@ export default function TenantProfilePage() {
                 </div>
                 {t.enrollment_date || 'Move-in Date'}
               </span>
-              <span className="font-extrabold text-slate-900 dark:text-slate-100">{formatDate(effectiveRoom.enrollment_date)}</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-100">{formatDate(effectiveRoom.enrollment_date)}</span>
             </div>
           )}
 
@@ -202,7 +202,7 @@ export default function TenantProfilePage() {
               </div>
               {t.role}
             </span>
-            <Badge variant="outline" className="bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border-purple-200/80 dark:border-purple-800/60 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">
+            <Badge variant="outline" className="bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border-purple-200/80 dark:border-purple-800/60 text-[10px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-full uppercase">
               {language === 'np' ? 'भाडावाल (Tenant)' : 'ROOM_USER'}
             </Badge>
           </div>
@@ -212,7 +212,7 @@ export default function TenantProfilePage() {
       {/* ── CHANGE PASSWORD CARD ── */}
       <Card className="border border-slate-200/80 dark:border-slate-800/80 shadow-xs bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl overflow-hidden">
         <CardHeader className="bg-slate-50/70 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/60 p-3.5 sm:p-4">
-          <CardTitle className="text-xs sm:text-sm font-extrabold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+          <CardTitle className="text-xs sm:text-sm font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
             <div className="p-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
               <KeyRound size={14} />
             </div>
@@ -224,7 +224,7 @@ export default function TenantProfilePage() {
             
             {/* Current Password */}
             <div className="space-y-1 group">
-              <Label className="text-xs font-bold text-slate-700 dark:text-slate-300 ml-0.5">{t.current_password}</Label>
+              <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5">{t.current_password}</Label>
               <div className="relative flex items-center">
                 <Input 
                   type={showCurrentPassword ? "text" : "password"}
@@ -237,7 +237,7 @@ export default function TenantProfilePage() {
                 <button
                   type="button"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 cursor-pointer"
                 >
                   {showCurrentPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
@@ -246,7 +246,7 @@ export default function TenantProfilePage() {
 
             {/* New Password */}
             <div className="space-y-1 group">
-              <Label className="text-xs font-bold text-slate-700 dark:text-slate-300 ml-0.5">{t.new_password}</Label>
+              <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5">{t.new_password}</Label>
               <div className="relative flex items-center">
                 <Input 
                   type={showNewPassword ? "text" : "password"}
@@ -259,7 +259,7 @@ export default function TenantProfilePage() {
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 cursor-pointer"
                 >
                   {showNewPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
@@ -268,7 +268,7 @@ export default function TenantProfilePage() {
 
             {/* Confirm Password */}
             <div className="space-y-1 group">
-              <Label className="text-xs font-bold text-slate-700 dark:text-slate-300 ml-0.5">{t.confirm_password}</Label>
+              <Label className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5">{t.confirm_password}</Label>
               <div className="relative flex items-center">
                 <Input 
                   type="password"
@@ -285,7 +285,7 @@ export default function TenantProfilePage() {
           <CardFooter className="bg-slate-50/60 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-800/60 p-3 sm:p-4">
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold rounded-2xl h-11 text-xs sm:text-sm shadow-md shadow-emerald-500/20 active:scale-[0.98] transition-all cursor-pointer border-0"
+              className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl h-10 text-xs sm:text-sm shadow-xs active:scale-[0.98] transition-all cursor-pointer border-0"
               disabled={changePasswordMutation.isPending}
             >
               <span>{changePasswordMutation.isPending ? t.loading : t.update_password}</span>

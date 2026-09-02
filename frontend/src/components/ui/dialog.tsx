@@ -53,7 +53,7 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-[2%] sm:top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] max-h-[96dvh] sm:max-h-[90vh] overflow-y-auto -translate-x-1/2 translate-y-0 sm:-translate-y-1/2 gap-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-4 text-sm text-foreground duration-200 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 animate-fade-in",
+          "fixed top-[2%] sm:top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] max-h-[96dvh] sm:max-h-[90vh] overflow-y-auto -translate-x-1/2 translate-y-0 sm:-translate-y-1/2 gap-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-4 text-sm text-foreground duration-200 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 animate-fade-in",
           className
         )}
         {...props}
@@ -65,7 +65,7 @@ function DialogContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-2 right-2"
+                className="absolute top-2 right-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 size="icon-sm"
               />
             }
@@ -102,14 +102,14 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50/50 dark:bg-slate-900/50 shrink-0 divide-x divide-slate-200/80 dark:divide-slate-800 [&>button]:flex-1 [&>button]:h-full [&>button]:rounded-none [&>button]:text-xs sm:[&>button]:text-sm [&>button]:font-bold [&>button]:transition-colors [&>button]:border-0 [&>button]:shadow-none",
+        "border-t border-slate-200/80 dark:border-slate-800 flex items-stretch h-11 bg-slate-50/70 dark:bg-slate-900/80 shrink-0 divide-x divide-slate-200/80 dark:divide-slate-800 [&>button]:flex-1 [&>button]:h-full [&>button]:rounded-none [&>button]:text-xs sm:[&>button]:text-sm [&>button]:font-bold [&>button]:transition-colors [&>button]:border-0 [&>button]:shadow-none",
         className
       )}
       {...props}
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Close render={<Button variant="ghost" className="flex-1 h-full text-xs sm:text-sm font-semibold rounded-none">Close</Button>} />
+        <DialogPrimitive.Close render={<Button variant="ghost" className="flex-1 h-full text-xs sm:text-sm font-semibold rounded-none text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Close</Button>} />
       )}
     </div>
   )

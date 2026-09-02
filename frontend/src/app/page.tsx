@@ -45,7 +45,10 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    login(data);
+    login({
+      email: data.email.toLowerCase().trim(),
+      password: data.password.trim(),
+    });
   };
 
   return (

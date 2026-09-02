@@ -9,8 +9,16 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_development_on
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = typeof email === 'string' ? email.toLowerCase().trim() : '';
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: normalizedEmail,
+          mode: 'insensitive'
+        }
+      }
+    });
     if (!user || !user.is_active) {
       return res.status(401).json({ success: false, message: 'Invalid credentials or inactive account' });
     }
