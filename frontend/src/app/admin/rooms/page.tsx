@@ -355,8 +355,12 @@ export default function AdminRoomsPage() {
               key={room.id}
               className="group"
             >
-              {/* ── CARD ── */}
-              <div className="flex flex-col h-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs group-hover:shadow-md group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200 overflow-hidden">
+              {/* ── CARD WITH ACTIVE/INACTIVE RIBBON ── */}
+              <div className={`flex flex-col h-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-200/80 dark:border-slate-800 border-l-[4px] ${
+                room.is_active
+                  ? 'border-l-emerald-500 dark:border-l-emerald-500'
+                  : 'border-l-slate-300 dark:border-l-slate-600 opacity-80'
+              } shadow-xs group-hover:shadow-md group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200 overflow-hidden`}>
 
                 {/* Header */}
                 <div className="px-3.5 pt-3.5 pb-2 sm:px-4 sm:pt-4 sm:pb-2.5 flex items-center justify-between gap-2">
@@ -364,7 +368,16 @@ export default function AdminRoomsPage() {
                     <div className={`h-8 w-8 rounded-xl ${a.icon} flex items-center justify-center flex-shrink-0`}>
                       <Home size={15} />
                     </div>
-                    <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base leading-tight truncate">{room.room_name}</h3>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base leading-tight truncate">{room.room_name}</h3>
+                        {!room.is_active && (
+                          <span className="text-[9px] font-semibold uppercase px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/80 dark:border-slate-700/80 shrink-0">
+                            {language === 'np' ? 'निष्क्रिय' : 'Inactive'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <div onClick={e => e.stopPropagation()} className="flex-shrink-0">
                     <DropdownMenu>
