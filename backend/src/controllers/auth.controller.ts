@@ -123,3 +123,90 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ success: false, message: 'Failed to change password' });
   }
 };
+
+export const directResetPassword = async (req: Request, res: Response) => {
+  try {
+    const { identifier, email, newPassword } = req.body;
+    const searchTarget = (identifier || email || '').toString().trim();
+
+    if (!searchTarget) {
+      return res.status(400).json({ success: false, message: 'Email address or room name is required' });
+    }
+
+    if (!newPassword || typeof newPassword !== 'string' || newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters long' });
+    }
+
+    // 1. Find user by email (case-insensitive)
+    let user = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: searchTarget,
+          mode: 'insensitive'
+        }
+      },
+      include: {
+        room: true
+      }
+    });
+
+    // 2. If not found by email, check if it matches a room name (for tenants)
+    if (!user) {
+      const room = await prisma.room.findFirst({
+        where: {
+          room_name: {
+            equals: searchTarget,
+            mode: 'insensitive'
+          }
+        },
+        include: {
+          user: true
+        }
+      });
+      if (room && room.user) {
+        user = { ...room.user, room };
+      }
+    }
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'No account found matching this email or room' });
+    }
+
+    if (!user.is_active) {
+      return res.status(403).json({ success: false, message: 'Account is deactivated. Please contact the administrator.' });
+    }
+
+    const password_hash = await argon2.hash(newPassword);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password_hash }
+    });
+
+    // Log to AuditLog (non-blocking)
+    await prisma.auditLog.create({
+      data: {
+        user_id: user.id,
+        action: 'DIRECT_PASSWORD_RESET',
+        entity_type: 'USER',
+        entity_id: user.id,
+        metadata: {
+          email: user.email,
+          role: user.role,
+          room_name: user.room?.room_name || null
+        }
+      }
+    }).catch(() => {});
+
+    return res.json({
+      success: true,
+      message: 'Password reset successfully! You can now log in with your new password.',
+      data: {
+        email: user.email
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to reset password' });
+  }
+};
+
