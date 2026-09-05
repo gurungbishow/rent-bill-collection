@@ -16,7 +16,6 @@ import {
   Eye,
   EyeOff,
   KeyRound,
-  Zap,
   AlertCircle,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -28,8 +27,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogFooter,
 } from '@/components/ui/dialog';
 import api from '@/lib/axios';
 import { toast } from 'sonner';
@@ -50,7 +47,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
-  // Direct Reset (No Email Required) state
+  // Minimalist Password Reset state
   const [isDirectResetOpen, setIsDirectResetOpen] = useState(false);
   const [resetIdentifier, setResetIdentifier] = useState('');
   const [resetNewPassword, setResetNewPassword] = useState('');
@@ -105,8 +102,8 @@ export default function LoginPage() {
     if (!target) {
       setResetError(
         language === 'np'
-          ? 'दर्ता गरिएको इमेल वा कोठाको नाम प्रविष्ट गर्नुहोस्'
-          : 'Please enter your registered email or room name'
+          ? 'इमेल वा कोठाको नाम प्रविष्ट गर्नुहोस्'
+          : 'Please enter your email or room name'
       );
       return;
     }
@@ -132,7 +129,7 @@ export default function LoginPage() {
         t.direct_reset_success || 'Password reset successfully! You can now sign in.'
       );
 
-      // Pre-fill the login email for immediate ease of access
+      // Pre-fill login email for easy sign in
       if (res.data?.data?.email) {
         setValue('email', res.data.data.email);
       } else if (target.includes('@')) {
@@ -228,7 +225,6 @@ export default function LoginPage() {
                   >
                     {t.password}
                   </Label>
-                  {/* Direct Reset Trigger */}
                   <button
                     type="button"
                     onClick={() => {
@@ -295,132 +291,102 @@ export default function LoginPage() {
         </Card>
       </motion.div>
 
-      {/* ── DIRECT PASSWORD RESET DIALOG (NO EMAIL REQUIRED) ── */}
+      {/* ── MINIMALIST PASSWORD RESET DIALOG ── */}
       <Dialog open={isDirectResetOpen} onOpenChange={setIsDirectResetOpen}>
-        <DialogContent className="sm:max-w-[440px] p-0 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl">
-          <DialogHeader className="p-5 sm:p-6 pb-2 text-left space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2.5 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
-                  <KeyRound size={20} strokeWidth={2} />
-                </div>
-                <DialogTitle className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-                  {t.direct_reset_title || 'Direct Password Reset'}
-                </DialogTitle>
-              </div>
-            </div>
-
-            {/* Direct Reset • No Email Required Badge */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold w-fit">
-              <Zap size={13} className="text-emerald-500 fill-emerald-500" />
-              <span>{t.no_email_required_badge || '⚡ Direct Reset • No Email Required'}</span>
-            </div>
-
-            <DialogDescription className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed pt-0.5">
-              {t.direct_reset_desc ||
-                'Reset your password directly and immediately without waiting for an email verification link.'}
-            </DialogDescription>
+        <DialogContent className="sm:max-w-[380px] p-5 sm:p-6 gap-4 rounded-2xl">
+          <DialogHeader className="gap-1 text-left pb-1">
+            <DialogTitle className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <KeyRound size={18} className="text-blue-600 dark:text-blue-400" />
+              {t.reset_password || 'Reset Password'}
+            </DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleDirectReset}>
-            <div className="p-5 sm:p-6 pt-2 space-y-4">
-              {resetError && (
-                <div className="flex items-start gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-600 dark:text-red-400 text-xs">
-                  <AlertCircle size={16} className="shrink-0 mt-0.5" />
-                  <span className="font-medium leading-snug">{resetError}</span>
-                </div>
-              )}
-
-              {/* Identifier or Email */}
-              <div className="space-y-1.5">
-                <Label
-                  htmlFor="reset-identifier"
-                  className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
-                >
-                  {t.identifier_or_email || 'Registered Email or Room Name'}
-                </Label>
-                <div className="relative flex items-center">
-                  <Input
-                    id="reset-identifier"
-                    type="text"
-                    placeholder={t.identifier_placeholder || 'e.g. john@example.com or Room 101'}
-                    value={resetIdentifier}
-                    onChange={(e) => setResetIdentifier(e.target.value)}
-                    className="pl-10 h-11 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
-                  />
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
-                </div>
+          <form onSubmit={handleDirectReset} className="space-y-3.5">
+            {resetError && (
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-600 dark:text-red-400 text-xs">
+                <AlertCircle size={15} className="shrink-0" />
+                <span className="font-medium">{resetError}</span>
               </div>
+            )}
 
-              {/* New Password */}
-              <div className="space-y-1.5">
-                <Label
-                  htmlFor="reset-new-password"
-                  className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
-                >
-                  {t.new_password || 'New Password'}
-                </Label>
-                <div className="relative flex items-center">
-                  <Input
-                    id="reset-new-password"
-                    type={showResetPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={resetNewPassword}
-                    onChange={(e) => setResetNewPassword(e.target.value)}
-                    className="pl-10 pr-10 h-11 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
-                  />
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
-                  <button
-                    type="button"
-                    onClick={() => setShowResetPassword(!showResetPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 cursor-pointer"
-                  >
-                    {showResetPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm New Password */}
-              <div className="space-y-1.5">
-                <Label
-                  htmlFor="reset-confirm-password"
-                  className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
-                >
-                  {t.confirm_password || 'Confirm Password'}
-                </Label>
-                <div className="relative flex items-center">
-                  <Input
-                    id="reset-confirm-password"
-                    type={showResetConfirmPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={resetConfirmPassword}
-                    onChange={(e) => setResetConfirmPassword(e.target.value)}
-                    className="pl-10 pr-10 h-11 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
-                  />
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
-                  <button
-                    type="button"
-                    onClick={() => setShowResetConfirmPassword(!showResetConfirmPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 cursor-pointer"
-                  >
-                    {showResetConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
+            {/* Email or Room */}
+            <div className="space-y-1">
+              <Label
+                htmlFor="reset-identifier"
+                className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
+              >
+                {t.email_or_room || 'Email or Room'}
+              </Label>
+              <div className="relative flex items-center">
+                <Input
+                  id="reset-identifier"
+                  type="text"
+                  placeholder={t.email_or_room_placeholder || 'name@example.com or Room 101'}
+                  value={resetIdentifier}
+                  onChange={(e) => setResetIdentifier(e.target.value)}
+                  className="pl-9 h-10 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
+                />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
               </div>
             </div>
 
-            <DialogFooter className="p-4 sm:p-6 pt-2 bg-slate-50/60 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800/60 flex flex-col sm:flex-row gap-2 sm:justify-end">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => {
-                  setIsDirectResetOpen(false);
-                  setResetError('');
-                }}
-                className="w-full sm:w-auto h-10 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-xl cursor-pointer"
+            {/* New Password */}
+            <div className="space-y-1">
+              <Label
+                htmlFor="reset-new-password"
+                className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
               >
-                {t.back_to_sign_in || 'Back to Sign In'}
-              </Button>
+                {t.new_password || 'New Password'}
+              </Label>
+              <div className="relative flex items-center">
+                <Input
+                  id="reset-new-password"
+                  type={showResetPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={resetNewPassword}
+                  onChange={(e) => setResetNewPassword(e.target.value)}
+                  className="pl-9 pr-9 h-10 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
+                />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                <button
+                  type="button"
+                  onClick={() => setShowResetPassword(!showResetPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
+                >
+                  {showResetPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="space-y-1">
+              <Label
+                htmlFor="reset-confirm-password"
+                className="text-xs font-medium text-slate-700 dark:text-slate-300 ml-0.5"
+              >
+                {t.confirm_password || 'Confirm Password'}
+              </Label>
+              <div className="relative flex items-center">
+                <Input
+                  id="reset-confirm-password"
+                  type={showResetConfirmPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={resetConfirmPassword}
+                  onChange={(e) => setResetConfirmPassword(e.target.value)}
+                  className="pl-9 pr-9 h-10 text-xs sm:text-sm bg-slate-50/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-blue-500"
+                />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                <button
+                  type="button"
+                  onClick={() => setShowResetConfirmPassword(!showResetConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
+                >
+                  {showResetConfirmPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-2">
               <Button
                 type="submit"
                 disabled={
@@ -429,13 +395,13 @@ export default function LoginPage() {
                   !resetNewPassword ||
                   !resetConfirmPassword
                 }
-                className="w-full sm:w-auto h-10 px-5 text-xs font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-500/20 cursor-pointer transition-all active:scale-[0.98]"
+                className="w-full h-10 text-xs sm:text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-500/20 cursor-pointer transition-all active:scale-[0.98]"
               >
                 {isResetSubmitting
                   ? t.loading || 'Loading...'
-                  : t.reset_password_btn || 'Reset Password Directly'}
+                  : t.reset_password || 'Reset Password'}
               </Button>
-            </DialogFooter>
+            </div>
           </form>
         </DialogContent>
       </Dialog>

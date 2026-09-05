@@ -139,18 +139,13 @@ export const translations = {
     update_password: 'Update Password',
     password_updated_success: 'Password updated successfully.',
 
-    // Direct Password Reset (No Email Required)
+    // Password Reset (Minimalist)
     forgot_password: 'Forgot password?',
-    direct_reset: 'Direct Reset',
-    direct_reset_title: 'Direct Password Reset',
-    no_email_required_badge: '⚡ Direct Reset • No Email Required',
-    direct_reset_desc: 'Reset your password directly and immediately without waiting for an email verification link.',
-    identifier_or_email: 'Registered Email or Room Name',
-    identifier_placeholder: 'e.g. john@example.com or Room 101',
-    reset_password_btn: 'Reset Password Directly',
+    reset_password: 'Reset Password',
+    email_or_room: 'Email or Room',
+    email_or_room_placeholder: 'name@example.com or Room 101',
     passwords_dont_match: 'Passwords do not match.',
     direct_reset_success: 'Password reset successfully! You can now sign in.',
-    back_to_sign_in: 'Back to Sign In',
 
     // Messages
     bill_saved_success: 'Bill generated successfully.',
@@ -308,18 +303,13 @@ export const translations = {
     password_updated_success:
       'पासवर्ड सफलतापूर्वक परिवर्तन भयो।',
 
-    // Direct Password Reset (No Email Required)
+    // Password Reset (Minimalist)
     forgot_password: 'पासवर्ड बिर्सनुभयो?',
-    direct_reset: 'प्रत्यक्ष रिसेट',
-    direct_reset_title: 'प्रत्यक्ष पासवर्ड रिसेट',
-    no_email_required_badge: '⚡ प्रत्यक्ष रिसेट • इमेल आवश्यक छैन',
-    direct_reset_desc: 'कुनै इमेल प्रमाणीकरण लिङ्कको प्रतीक्षा नगरी सिधै आफ्नो पासवर्ड रिसेट गर्नुहोस्।',
-    identifier_or_email: 'दर्ता गरिएको इमेल वा कोठाको नाम',
-    identifier_placeholder: 'उदा. john@example.com वा Room 101',
-    reset_password_btn: 'सिधै पासवर्ड रिसेट गर्नुहोस्',
+    reset_password: 'पासवर्ड रिसेट गर्नुहोस्',
+    email_or_room: 'इमेल वा कोठा',
+    email_or_room_placeholder: 'name@example.com वा Room 101',
     passwords_dont_match: 'पासवर्डहरू मिलेनन्।',
     direct_reset_success: 'पासवर्ड सफलतापूर्वक रिसेट भयो! अब तपाइँ साइन इन गर्न सक्नुहुन्छ।',
-    back_to_sign_in: 'साइन इनमा फर्कनुहोस्',
 
     // Messages
     bill_saved_success: 'बिल सफलतापूर्वक बनाइयो।',
